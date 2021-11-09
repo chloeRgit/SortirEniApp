@@ -4,3 +4,43 @@ table tr td{
     text-align: center;
     border: 1px solid black;
 }
+
+#modification_profil label,
+#modification_profil input,
+#modification_profil select{
+    display: block!important;
+    width: auto!important;
+}
+
+#modification_profil .mb-3{
+    margin: 1em 0!important;
+}
+
+.row{
+    display: flex;
+    justify-content: center;
+}
+
+.row .col-lg-6{
+    width: 50%!important;
+}
+.row .col-lg-6 div p{
+    display: inline-block!important;
+}
+
+h1{
+    text-align: center;
+}
+
+.btn-container{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.btn-container a{
+    padding: 0.5em 1em;
+    background-color: wheat;
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+}
