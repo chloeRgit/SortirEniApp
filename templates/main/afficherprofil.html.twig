@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />
+    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
+{% endblock %}
+
+{% block body %}
+    <h1> Profil de {{participant.pseudo}}</h1>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Pseudo</th>
+            <th>Prenom</th>
+            <th>Nom</th>
+            <th>Telephone</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Site</th>
+            <th>Photo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{participant.pseudo}}</td>
+            <td>{{participant.prenom}}</td>
+            <td>{{participant.nom}}</td>
+            <td>{{participant.telephone}}</td>
+            <td>{{participant.email}}</td>
+            <td>{{participant.password}}</td>
+            <td>{{participant.site}}</td>
+            <td>{{participant.photo}}</td>
+        </tr>
+        <tbody>
+
+    </table>
+
+
+{% endblock %}

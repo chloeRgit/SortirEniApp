@@ -1,0 +1,6 @@
+table tr th,
+table tr td{
+    width: 10em;
+    text-align: center;
+    border: 1px solid black;
+}

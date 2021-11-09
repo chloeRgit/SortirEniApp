@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1> Modification de mon profil </h1>
+
+    {{form_start(formProfil)}}
+    <div class="col-4">
+        {{form_widget(formProfil)}}
+        <button type="submit" class="btn btn-outline-success">Valider</button>
+    </div>
+    {{form_end(formProfil)}}
+
+{% endblock %}
