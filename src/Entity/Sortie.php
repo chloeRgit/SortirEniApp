@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\SortieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,6 +64,22 @@ class Sortie
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
      */
     private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sortiesOrganisees")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $organisateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, inversedBy="sortiesInscriptions")
+     */
+    private $inscription;
+
+    public function __construct()
+    {
+        $this->inscription = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -172,6 +190,42 @@ class Sortie
     public function setLieu(?Lieu $lieu): self
     {
         $this->lieu = $lieu;
+
+        return $this;
+    }
+
+    public function getOrganisateur(): ?Participant
+    {
+        return $this->organisateur;
+    }
+
+    public function setOrganisateur(?Participant $organisateur): self
+    {
+        $this->organisateur = $organisateur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Participant[]
+     */
+    public function getInscription(): Collection
+    {
+        return $this->inscription;
+    }
+
+    public function addInscription(Participant $inscription): self
+    {
+        if (!$this->inscription->contains($inscription)) {
+            $this->inscription[] = $inscription;
+        }
+
+        return $this;
+    }
+
+    public function removeInscription(Participant $inscription): self
+    {
+        $this->inscription->removeElement($inscription);
 
         return $this;
     }
