@@ -53,6 +53,16 @@ class Sortie
      */
     private $etat;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="siteOrganisateur")
+     */
+    private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sorties")
+     */
+    private $lieu;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -138,6 +148,30 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getSite(): ?Site
+    {
+        return $this->site;
+    }
+
+    public function setSite(?Site $site): self
+    {
+        $this->site = $site;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }

@@ -29,9 +29,15 @@ class Site
      */
     private $rattachement;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="site")
+     */
+    private $siteOrganisateur;
+
     public function __construct()
     {
         $this->rattachement = new ArrayCollection();
+        $this->siteOrganisateur = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,6 +81,36 @@ class Site
             // set the owning side to null (unless already changed)
             if ($rattachement->getSite() === $this) {
                 $rattachement->setSite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Sortie[]
+     */
+    public function getSiteOrganisateur(): Collection
+    {
+        return $this->siteOrganisateur;
+    }
+
+    public function addSiteOrganisateur(Sortie $siteOrganisateur): self
+    {
+        if (!$this->siteOrganisateur->contains($siteOrganisateur)) {
+            $this->siteOrganisateur[] = $siteOrganisateur;
+            $siteOrganisateur->setSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSiteOrganisateur(Sortie $siteOrganisateur): self
+    {
+        if ($this->siteOrganisateur->removeElement($siteOrganisateur)) {
+            // set the owning side to null (unless already changed)
+            if ($siteOrganisateur->getSite() === $this) {
+                $siteOrganisateur->setSite(null);
             }
         }
 
