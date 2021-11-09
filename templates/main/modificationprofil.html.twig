@@ -8,36 +8,11 @@
 {% block body %}
     <h1> Modification de mon profil </h1>
 
-    <form method="post">
-        <div class="row-pseudo">
-            <label>Pseudo :</label>
-            <input id="modification_profil[pseudo]" type="text" value="{{ participant.pseudo }}">
-        </div>
-        <div class="row-prenom">
-            <p>Prénom :</p>
-            <input id="modification_profil[prenom]" type="text" value="{{ participant.prenom }}">
-        </div>
-        <div class="row-nom">
-            <p>Nom :</p>
-            <input id="modification_profil[nom]" type="text" value="{{ participant.nom }}">
-        </div>
-        <div class="row-telephone">
-            <p>Téléphone :</p>
-            <input id="modification_profil[telephone]" type="text" value="{{ participant.telephone }}">
-        </div>
-        <div class="row-email">
-            <p>Email :</p>
-            <input id="modification_profil[email]" type="email" value="{{ participant.email }}">
-        </div>
-        <div class="row-ville">
-            <p>Ville :</p>
-            <select id="modification_profil[site]">
-                <option value=""></option>
-                {% for s in site %}
-                    <option value="s.id">{{ s.nom }}</option>
-                {% endfor %}
-            </select>
-        </div>
-    </form>
+    {{form_start(formProfil)}}
+    <div class="col-4">
+        {{form_widget(formProfil)}}
+        <button type="submit" class="btn btn-outline-success">Valider</button>
+    </div>
+    {{form_end(formProfil)}}
 
 {% endblock %}

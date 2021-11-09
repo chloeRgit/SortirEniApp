@@ -12,16 +12,17 @@ class ModificationProfilType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            //->add('roles')
-            ->add('password')
             ->add('pseudo')
-            ->add('nom')
             ->add('prenom')
+            ->add('nom')
             ->add('telephone')
-            ->add('actif')
-            ->add('photo')
+            ->add('email')
+            ->add('password')
+            //->add('roles')
             //->add('site')
+            //->add('actif')
+            //->add('photo')
+
         ;
     }
 
