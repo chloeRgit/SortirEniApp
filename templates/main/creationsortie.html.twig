@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />
+    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
+{% endblock %}
+
+
+{% block body %}
+    <h1> Création d'une sortie </h1>
+
+    {{form_start(formSortie)}}
+    <div class="col-4">
+        {{form_widget(formSortie)}}
+        <button type="submit" class="btn btn-outline-success">Valider</button>
+    </div>
+    {{form_end(formSortie)}}
+
+{% endblock %}
