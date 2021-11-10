@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />
+    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
+{% endblock %}
+
+{% block body %}
+    <h1>Mon profil</h1>
+    <div class="container row">
+    <div class="col-lg-6">
+        <img src="{{ participant.photo }}">
+    </div>
+    <div class="col-lg-6">
+        <div class="row-prenom">
+            <p>Prénom :</p>
+            <p>{{ participant.prenom }}</p>
+        </div>
+        <div class="row-nom">
+            <p>Nom :</p>
+            <p>{{ participant.nom }}</p>
+        </div>
+        <div class="row-telephone">
+            <p>Téléphone :</p>
+            <p>{{ participant.telephone }}</p>
+        </div>
+        <div class="row-email">
+            <p>Email :</p>
+            <p>{{ participant.email }}</p>
+        </div>
+        <div class="row-ville">
+            <p>Ville :</p>
+            <p>{{ participant.site.getNom }}</p>
+        </div>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="btn-container">
+            <a href="{{ path('main') }}">Retour</a>
+        </div>
+        <div class="btn-container">
+            <a href="{{ path('edit_profil', {id: participant.id}) }}" class="btn btn-outline-success">Modifier</a>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
