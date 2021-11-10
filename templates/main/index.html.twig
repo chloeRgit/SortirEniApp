@@ -1,9 +1,14 @@
 {% extends 'base.html.twig' %}
 
 
-
 {% block body %}
 <div class="row">
+    <div class="offset-2 col-8">
+        <h1>Filtrer les sorties</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="offset-2 col-8">
     <table class="table table-striped table-hover">
         <thead>
         <tr>
@@ -19,30 +24,126 @@
         </thead>
         <tbody>
         {% for s in sorties %}
+            {% set inscrit=false %}
+            {% if (user in s.inscription)%} {% set inscrit=true %}{% endif %}
+            {% if (user==s.organisateur and s.etat.libelle=='Créee' ) %}
+                <tr>
+                    <td>{{ s.nom }}</td>
+                    <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                    <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                    <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                    <td>{{ s.etat.libelle }}</td>
+                    <td></td>
+                    <td>{{ s.organisateur.nom }}</td>
+                    <td> <button
+                                class="btn btn-primary">
+                            <a href="{# {{ path('#',{id: s.id}) }}#}">
+                                <i class="fa-solid fa-edit">Modifier</i></a>
+                        </button>
+                        &nbsp;
+                        <button
+                                class="btn btn-danger del">
+                            <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
+                                <i class="fa-solid fa-paper-plane">Publier</i>
+                        </button>
+                    </td>
+                </tr>
 
-        <tr>
-            <td>{{ s.nom }}</td>
-            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
-            <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
-            <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
-            <td>{{ s.etat.libelle }}</td>
-            <td>inscrit</td>
-            <td>{{ s.organisateur.nom }}</td>
-            <td>action</td>
-        </tr>
+                    {% elseif(user==s.organisateur and s.etat.libelle=='Ouverte')%}
+                        <tr>
+                            <td>{{ s.nom }}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                            <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                            <td>{{ s.etat.libelle }}</td>
+                            <td></td>
+                            <td>{{ s.organisateur.nom }}</td>
+                            <td><button class="btn btn-primary">
+                                    <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-eye">Afficher</i>
+                                </button>
+                                &nbsp;
+                                <button class="btn btn-danger del">
+                                        <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-paper-trash">Annuler</i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% elseif(user==s.organisateur and (s.etat.libelle=='En cours'or s.etat.libelle=='Passée' or s.etat.libelle=='Annulée'))%}
+                        <tr>
+                            <td>{{ s.nom }}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                            <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                            <td>{{ s.etat.libelle }}</td>
+                            <td></td>
+                            <td>{{ s.organisateur.nom }}</td>
+                            <td><button
+
+                                        class="btn btn-primary">
+                                    <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-eye">Afficher</i>
+                                </button>
+                            </td>
+                        </tr>
+                    {% elseif(user!=s.organisateur and (s.etat.libelle=='Ouverte' or s.etat.libelle=='Fermée' ))%}
+                        <tr>
+                            <td>{{ s.nom }}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                            <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                            <td>{{ s.etat.libelle }}</td>
+                            <td>{% if inscrit %} x {% endif %}</td>
+                            <td>{{ s.organisateur.nom }}</td>
+                            <td><button
+                                        class="btn btn-primary">
+                                    <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-eye">Afficher</i>
+                                </button>
+                                {% if inscrit %}
+                                    &nbsp;
+                                    <button
+                                        class="btn btn-danger del">
+                                        <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-user-minus">Désister</i>
+                                    </button>
+                                {% else%}
+                                    <button
+                                        class="btn btn-danger del">
+                                    <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-user-plus">inscrire</i>
+                                    </button>{% endif %}
+                            </td>
+                        </tr>
+                    {% elseif(user!=s.organisateur and (s.etat.libelle=='En cours' or s.etat.libelle=='Passée' or s.etat.libelle=='Annulée' ))%}
+                        <tr>
+                            <td>{{ s.nom }}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                            <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                            <td>{{ s.etat.libelle }}</td>
+                            <td>{% if inscrit %} x {% endif %}</td>
+                            <td>{{ s.organisateur.nom }}</td>
+                            <td> <button
+                                    class="btn btn-primary">
+                                    <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
+                                        <i class="fa-solid fa-eye">Afficher</i>
+                                </button>
+                            </td>
+                        </tr>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
+        </div>
+    <div class="offset-2 col-8">
+        <button class="btn btn-secondary">
+            <a href="{# {{ path('#',{id: user.id) }}#}"></a>
+                Créer une sortie
+        </button>
+    </div>
 </div>
 
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/wamp64/www/symfony/SortirEniApp/src/Controller/MainController.php'|file_link(0) }}">src/Controller/MainController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/wamp64/www/symfony/SortirEniApp/templates/main/index.html.twig'|file_link(0) }}">templates/main/index.html.twig</a></code></li>
-    </ul>
-</div>
 {% endblock %}
