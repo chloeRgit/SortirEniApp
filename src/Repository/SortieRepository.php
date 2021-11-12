@@ -18,6 +18,53 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
+    public function sortieFiltree($site=null,$nom=null,$datemin=null,$datemax=null,$organisateur=null,$passees=null)
+    {
+        $entityManager=$this->getEntityManager();
+        $dql="SELECT s FROM App\Entity\Sortie s  WHERE s.site is not null";
+
+        if($site){
+            $dql.=" AND s.site=:site";
+        }
+        if($organisateur){
+            $dql.=" AND s.organisateur=:organisateur";
+        }
+        if($datemin){
+            $dql.=" AND s.dateHeureDebut>=:datemin";
+        }
+        if($datemax){
+            $dql.=" AND s.dateHeureDebut<=:datemax";
+        }
+        if($nom){
+            $dql.=" AND s.nom LIKE :nom";
+        }
+        if($passees){
+            $dql.=" AND s.dateHeureDebut<:passees";
+        }
+
+        $query=$entityManager->createQuery($dql);
+        if($site){
+            $query->setParameter("site",$site);
+        }
+        if($organisateur){
+            $query->setParameter("organisateur",$organisateur);
+        }
+        if($datemin){
+            $query->setParameter("datemin",$datemin);
+        }
+        if($datemax){
+           $query->setParameter("datemax",$datemax);
+        }
+        if($nom){
+            $query->setParameter("nom",$nom);
+        }
+        if($passees){
+            $query->setParameter("passees",$passees);
+        }
+
+
+        return $query->getResult();
+    }
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
