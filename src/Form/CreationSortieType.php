@@ -3,7 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Sortie;
+use App\Entity\Ville;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,15 +16,15 @@ class CreationSortieType extends AbstractType
         $builder
             ->add('nom')
             ->add('dateHeureDebut')
-            ->add('duree')
             ->add('dateLimiteInscription')
             ->add('nbInscriptionsMax')
-            ->add('infosSortie')
-            ->add('etat',null,['choice_label'=>'libelle'])
-            ->add('site',null,['choice_label'=>'nom'])
+            ->add('duree')
+            ->add('infosSortie', TextareaType::class)
+            //->add('organisateur')
+            //->add('site',null,['choice_label'=>'nom'])
             ->add('lieu',null,['choice_label'=>'nom'])
-            ->add('organisateur')
-            ->add('inscription')
+            //->add('etat',null,['choice_label'=>'libelle'])
+            //->add('inscription')
         ;
     }
 

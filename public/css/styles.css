@@ -44,3 +44,27 @@ h1{
     color: black;
     text-transform: uppercase;
 }
+
+.create_sortie div *{
+    display: inline-flex;
+}
+
+.create_sortie{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.create_sortie div{
+    display: block;
+    margin: 1em auto;
+}
+
+.create_sortie .button-container{
+    margin: 1em auto;
+    display: inline-flex;
+}
+
+.create_sortie .button-container button{
+    margin: 0 1em!important;
+}

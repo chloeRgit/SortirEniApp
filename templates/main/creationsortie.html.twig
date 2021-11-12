@@ -8,11 +8,78 @@
 {% block body %}
     <h1> Création d'une sortie </h1>
 
-    {{form_start(formSortie)}}
-    <div class="col-4">
-        {{form_widget(formSortie)}}
-        <button type="submit" class="btn btn-outline-success">Valider</button>
-    </div>
-    {{form_end(formSortie)}}
+    <form class="create_sortie" action="{{ path('app_sortie') }}" method="post">
+        <div>
+        <label for="titre-sortie">Nom de la sortie :</label>
+        <input type="text" name="titre-sortie">
+        </div>
+        <div>
+        <label for="date-h-sortie">Date et heure de la sortie :</label>
+        <input type="datetime-local" name="date-h-sortie">
+        </div>
+        <div>
+        <label for="date-l-sortie">Date limite de la sortie :</label>
+        <input type="date" name="date-l-sortie">
+        </div>
+        <div>
+        <label for="nbParticipant-sortie">Nombre de places :</label>
+        <input type="number" name="nbParticipant-sortie">
+        </div>
+        <div>
+        <label for="duree-sortie">Durée :</label>
+        <p><input type="number" name="duree-sortie"> minutes </p>
+        </div>
+        <div>
+        <label for="desc-sortie">Descriptions et infos :</label>
+        <textarea name="desc-sortie">
+
+        </textarea>
+        </div>
+        <div>
+        <label for="ville-org-sortie">Ville organisatrice de la sortie :</label>
+        <input type="text" name="ville-org-sortie" disabled value="{{ siteOrganisateur }}">
+        </div>
+        <div>
+        <label for="ville-select">Ville:</label>
+        <select class="form-control"name="ville-select">
+            <option selected>Tous</option>
+            {% for vv in ville %}
+                <option> {{ vv.nom }}</option>
+            {% endfor %}
+        </select>
+        </div>
+
+            <form method="get" action="{{ path('sortie_lieu') }}">
+                <div>
+        <label for="lieu-select">Lieu:</label>
+        <select class="form-control"name="lieu-select">
+            <option selected>Tous</option>
+            {% for ll in lieux %}
+                <option> {{ ll.nom }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div>
+        <label for="rue-lieu-sortie">Rue :</label>
+        <input type="text" name="rue-lieu-sortie" disabled value="">
+        </div>
+        <div>
+        <label for="cp-lieu-sortie">Code postal :</label>
+        <input type="text" name="cp-lieu-sortie" disabled value="">
+        </div>
+        <div>
+        <label for="lat-lieu-sortie">Latitude :</label>
+        <input type="number" name="lat-lieu-sortie">
+        </div>
+        <div>
+        <label for="long-lieu-sortie">Longitude :</label>
+        <input type="number" name="long-lieu-sortie">
+        </div>
+            </form>
+        <div class="button-container">
+        <button type="submit" name="action" value="enregistrer">Enregistrer</button>
+        <button type="submit" name="action" value="creer">Publier la sortie</button>
+        </div>
+    </form>
 
 {% endblock %}
