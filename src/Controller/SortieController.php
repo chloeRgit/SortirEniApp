@@ -14,6 +14,7 @@ use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -52,7 +53,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/create_sortie", name="app_sortie") method=post
+     * @Route("create_sortie", name="app_sortie")
      */
     public function creationSortie( Request $request,EtatRepository $etatRepository, SortieRepository $repo, LieuRepository $lieuRepository, SiteRepository $siteRepository, VilleRepository $villeRepository): Response
     {
@@ -60,35 +61,35 @@ class SortieController extends AbstractController
         $rue = null;
         $cp = null;
         $lieuChoisi = null;
-        if(isset($_POST['lieu-select'])) {
-            $lieuChoisi = $_POST['lieu-select'];
-            $rue = $lieuChoisi->getRue();
-            $cp = $lieuChoisi->getVille()->getCodePostal();
-        } else {
-        }
 
         $lieu = $lieuRepository->findAll();
         $ville = $villeRepository->findAll();
-        if (isset($_POST['enregistrer'])) {
 
-            $etat = $etatRepository->find(1);
-
-        } elseif (isset($_POST['creer'])) {
-
-            $etat = $etatRepository->find(2);
-
-        } else {
-
-        }
         $organisteur = $this->getUser();
 
         $formSortie = $this->createForm(CreationSortieType::class, $sortie);
         $formSortie->handleRequest($request);
 
 
-        if ($formSortie->isSubmitted()){
+        if ($formSortie->isSubmitted() && $formSortie->isValid()){
             $sortie->setOrganisateur($organisteur);
+
+            /*if (isset($_POST['1'])) {
+
+                $etat = $etatRepository->find(1);
+                console.log($etat);
+
+            } elseif (isset($_POST['2'])) {
+
+                $etat = $etatRepository->find(2);
+
+            } else {
+
+            }*/
+            $etat=$etatRepository->find(1);
+
             $sortie->setEtat($etat);
+            dd($sortie);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($sortie);
@@ -107,63 +108,52 @@ class SortieController extends AbstractController
             'siteOrganisateur' => $organisteur->getSite()->getNom(),
             'formSortie' => $formSortie->createView(),
         ]);
+    }
+    /**
+     * @Route("/api/select_lieu/{id}", name="api_ville" ,methods={"GET"})
+     */
+    public function selectLieu(LieuRepository $lieuRepo, VilleRepository $repo, $id): Response{
+        $ville = $repo->findOneBy(
+            [
+                "nom"=>$id
+            ]
+        );
+
+        $lieux = $lieuRepo->LieuFiltre($ville);
+        /*
+        $id_ville = $ville->getId();
+        $lieux = $lieuRepo->findBy(
+            [
+                "ville"=>$id_ville
+            ]
+        );
+        */
+
+        return $this->json($lieux);
     }
 
     /**
-     * @Route("/create_sortie", name="sortie_lieu") method=get
+     * @Route("/api/info_lieu/{id}", name="api_lieux" ,methods={"GET"})
      */
-    public function formLieu( Request $request,EtatRepository $etatRepository, SortieRepository $repo, LieuRepository $lieuRepository, SiteRepository $siteRepository, VilleRepository $villeRepository): Response
-    {
-        $sortie = new Sortie();
-        $rue = null;
-        $cp = null;
-        $lieuChoisi = null;
-        if(isset($_POST['lieu-select'])) {
-            $lieuChoisi = $_POST['lieu-select'];
-            $rue = $lieuChoisi->getRue();
-            $cp = $lieuChoisi->getVille()->getCodePostal();
-        } else {
-        }
+    public function infoLieu(LieuRepository $lieuRepo, VilleRepository $repo, $id): Response{
+        $lieu = $lieuRepo->findOneBy(
+            [
+                "id"=>$id
+            ]
+        );
 
-        $lieu = $lieuRepository->findAll();
-        $ville = $villeRepository->findAll();
-        if (isset($_POST['enregistrer'])) {
+        $tabLieu = array();
+            $tabLieu[0] = $lieu->getRue();
+            $tabLieu[1] = $lieu->getVille()->getCodePostal();
+            $tabLieu[2] = $lieu->getLatitude();
+            $tabLieu[3] = $lieu->getLongitude();
 
-            $etat = $etatRepository->find(1);
+        //dd($tabLieu);
 
-        } elseif (isset($_POST['creer'])) {
+        //$rue = $lieu->getRue();
+        //$cp = $lieu->getVille()->getCodePostal();
 
-            $etat = $etatRepository->find(2);
-
-        } else {
-
-        }
-        $organisteur = $this->getUser();
-
-        $formSortie = $this->createForm(CreationSortieType::class, $sortie);
-        $formSortie->handleRequest($request);
-
-
-        if ($formSortie->isSubmitted()){
-            $sortie->setOrganisateur($organisteur);
-            $sortie->setEtat($etat);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($sortie);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('main');
-        }
-
-        return $this->render('main/creationsortie.html.twig', [
-            'sortie' => $sortie,
-            'organisateur'=>$organisteur,
-            'lieux' => $lieu,
-            'ville' => $ville,
-            'rue' => $rue,
-            'cp' => $cp,
-            'siteOrganisateur' => $organisteur->getSite()->getNom(),
-            'formSortie' => $formSortie->createView(),
-        ]);
+        return $this->json($tabLieu);
     }
+
 }

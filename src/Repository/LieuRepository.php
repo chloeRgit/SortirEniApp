@@ -47,4 +47,23 @@ class LieuRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function LieuFiltre($ville = null)
+    {
+        $entityManager = $this->getEntityManager();
+        $dql = "SELECT l FROM App\Entity\Lieu l";
+        if ($ville) {
+            $dql .= " WHERE l.ville=:ville";
+        }
+
+
+        $query = $entityManager->createQuery($dql);
+        if ($ville) {
+            $query->setParameter("ville", $ville);
+        }
+
+        return $query->getResult();
+
+
+    }
 }

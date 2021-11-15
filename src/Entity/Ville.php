@@ -69,12 +69,13 @@ class Ville
     }
 
     /**
-     * @return Collection|Lieu[]
+     *@return Collection|Lieu[]
      */
+    /*
     public function getLieuVille(): Collection
     {
         return $this->lieuVille;
-    }
+    }*/
 
     public function addLieuVille(Lieu $lieuVille): self
     {
