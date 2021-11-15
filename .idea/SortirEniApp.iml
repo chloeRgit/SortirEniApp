@@ -139,7 +139,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="Projet_Sortir_Cath_Jojo_Herve" />
     <orderEntry type="module" module-name="first-project" />
   </component>
 </module>

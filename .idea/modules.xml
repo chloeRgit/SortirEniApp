@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/../Projet_Sortir_Cath_Jojo_Herve/.idea/Projet_Sortir_Cath_Jojo_Herve.iml" filepath="$PROJECT_DIR$/../Projet_Sortir_Cath_Jojo_Herve/.idea/Projet_Sortir_Cath_Jojo_Herve.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SortirEniApp.iml" filepath="$PROJECT_DIR$/.idea/SortirEniApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/../bucket-list/.idea/first-project.iml" filepath="$PROJECT_DIR$/../bucket-list/.idea/first-project.iml" />
     </modules>
