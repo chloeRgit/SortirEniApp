@@ -42,7 +42,7 @@ class MainController extends AbstractController
     public function recherche(SortieRepository $repo, SiteRepository $repoSite, Request $request): Response
     {   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $sorties=$repo->findAll();
+        //récuparation des paramètres
         $user=$this->getUser();
         $sites=$repoSite->findAll();
         $siteresp = $request->request->get('site-select');
@@ -54,77 +54,79 @@ class MainController extends AbstractController
         $noninscritresp = $request->request->get('noninscrit-filter');
         $passeeresp = $request->request->get('passee-filter');
 
+        //initialiser les variables
         $datedeb=null;
         $datefin=null;
         $nom=null;
         $organisateur=null;
         $passee=null;
 
+        //preparation des filtres a mettre en place sur la requete
+        //site
         if($siteresp!=""|| $siteresp!=null ){
         $site=$repoSite->findBy(array('nom' => $siteresp));}
-
+        //organisateur
         if($organisateurresp==true){
             $organisateur=$this->getUser();}
-
-
+        //date de debut
         if($datedebresp!=""){
             $datedeb=$datedebresp;
         }
+        //date de fin
         if($datefinresp!=""){
             $datefin=$datefinresp;
         }
+        //nom contient
         if($nameresp!=""){
             $nom=$nameresp."%";
         }
+        //sorties passees
         if($passeeresp==true){
             $passee = date_create()->format('Y-m-d');
         }
         $sortiesFiltrees=$repo->sortieFiltree($site,$nom,$datedeb,$datefin,$organisateur,$passee);
+        //recuperation des sorties pre-filtrees sur les criteres(site,organisateur,date de debut,date de fin,nom contient,sorties passees)
+        $sorties=$sortiesFiltrees;
 
-        if($inscritresp==true){
+        //l'utilisateur est inscrit
+        if($inscritresp && !$noninscritresp){
             $inscrit=$this->getUser();
             $sortiesinscrit=$inscrit->getSortiesInscriptions();
-            $listid=[];
+            //$listid=[];
             $sorties=[];
             $sortiesFiltrees=(array)$sortiesFiltrees;
             foreach ($sortiesinscrit as $cle => $valeur) {
-                array_push($listid,$valeur->getid());
+                //array_push($listid,$valeur->getid());
                 foreach ($sortiesFiltrees as $key => $valeursf) {
                     if($valeursf->getid()==$valeur->getid()){
                         array_push($sorties,$valeursf);
                         }
                 }
             }
-            dd($listid,$sorties);
-
-                //echo $cle.' - '.$valeur->getid().'<br />'."\n";
-          //  for ($i = 0; $i <= $sortiesinscrit.lenght(); $i++){
-
-           // for (si in $sortiesinscrit){
-
-
-
-            //if ($sorties = array_intersect($sortiesFiltrees, array_filter($sortiesinscrit))) {
-                //^^^^^^^^^^^^ See here
-              //  $intersection [] = $sorties;
-            //}
-           //$sorties = array_intersect($sortiesinscrit, $sortiesFiltrees);
-           // $sorties=array_uintersect_assoc($sortiesinscrit,$sortiesFiltrees);
-       // dd($intersection);
-
-            //dd($sorties);
-           // foreach ($sortiesFiltrees){}
         }
-        if($noninscritresp==true){
-            $noninscrit=$this->getUser();
+        //l'utilisateur n'est pas inscrit
+        if($noninscritresp && !$inscritresp) {
+            $inscrit = $this->getUser();
+            $sortiesinscrit = $inscrit->getSortiesInscriptions();
+            $listidin = [];
+            $sorties = [];
+            $listidf = [];
+
+            foreach ($sortiesinscrit as $cle => $valeur) {
+                array_push($listidin, $valeur->getid());
+            }
+            foreach ($sortiesFiltrees as $cle => $valeur) {
+                array_push($listidf, $valeur->getid());
+            }
+
+            foreach ($sortiesFiltrees as $key => $s) {
+                $id = $s->getid();
+                if (in_array($id, $listidin)) {
+                } else {
+                    array_push($sorties, $s);
+                }
+            }
         }
-
-
-
-
-      // dd($sortiesFiltrees);
-       // dd($siteresp,$name , $datedeb,$datefin,$organisateur,$inscrit,$noninscrit,$passee);
-
 
 
 
