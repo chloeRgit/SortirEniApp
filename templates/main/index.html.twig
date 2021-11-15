@@ -3,9 +3,9 @@
 
 {% block body %}
     <div class="row">
-        <div class="offset-11 ">
-            <p>Date du jour: {{ "now"|date("m/d/Y") }}</p>
-            <p>Participant: {{ user.nom }}  {{ user.prenom }}</p>
+        <div class="offset-1 col-9 connectinfo ">
+            Date du jour: {{ "now"|date("m/d/Y") }}</br>
+            Participant: {{ user.nom }}  {{ user.prenom }}
         </div>
     </div>
 <div class="row">
@@ -70,7 +70,7 @@
 
                 <div class="form-group col-md-2">
                 <div>
-                    <button type="submit" class="btn btn-secondary">Rechercher</button>
+                    <button type="submit" class="btn btn-action">Rechercher</button>
                 </div>
                 </div>
             </div>
@@ -82,8 +82,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="offset-1 col-9 blocktableau">
-    <table class="table table-striped table-hover">
+    <div class="table-wrapper-scroll-y tab-scrollbar offset-1 col-9 blocktableau">
+    <table class="table  table-striped mb-0">
         <thead>
         <tr>
             <th scope="col">Nom de la sortie</th>
@@ -110,15 +110,15 @@
                     <td></td>
                     <td>{{ s.organisateur.nom }}</td>
                     <td> <button
-                                class="btn btn-primary">
+                                class="btn btn-modifier">
                             <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
-                                <i class="fa-solid fa-edit">Modifier</i>
+                                <i class="fa-solid fa-edit"></i><!--Modifier-->
                         </button>
                         &nbsp;
                         <button
-                                class="btn btn-danger del">
+                                class="btn btn-publier">
                             <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                <i class="fa-solid fa-paper-plane">Publier</i>
+                                <i class="fa-solid fa-paper-plane"></i><!--Publier-->
                         </button>
                     </td>
                 </tr>
@@ -132,14 +132,14 @@
                             <td>{{ s.etat.libelle }}</td>
                             <td></td>
                             <td>{{ s.organisateur.nom }}</td>
-                            <td><button class="btn btn-primary">
+                            <td><button class="btn btn-afficher">
                                     <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-eye">Afficher</i>
+                                        <i class="fa-solid fa-eye"></i><!--Afficher-->
                                 </button>
                                 &nbsp;
-                                <button class="btn btn-danger del">
+                                <button class="btn btn-annuler">
                                         <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-paper-trash">Annuler</i>
+                                        <i class="fa-solid fa fa-trash"></i><!--Annuler-->
                                 </button>
                             </td>
                         </tr>
@@ -154,9 +154,9 @@
                             <td>{{ s.organisateur.nom }}</td>
                             <td><button
 
-                                        class="btn btn-primary">
+                                        class="btn btn-afficher">
                                     <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-eye">Afficher</i>
+                                        <i class="fa-solid fa-eye"></i><!--Afficher-->
                                 </button>
                             </td>
                         </tr>
@@ -170,22 +170,23 @@
                             <td>{% if inscrit %} x {% endif %}</td>
                             <td>{{ s.organisateur.nom }}</td>
                             <td><button
-                                        class="btn btn-primary">
+                                        class="btn btn-afficher">
                                     <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-eye">Afficher</i>
+                                        <i class="fa-solid fa-eye"></i><!--Afficher-->
                                 </button>
                                 {% if inscrit %}
                                     &nbsp;
                                     <button
-                                        class="btn btn-danger del">
+                                        class="btn btn-desister">
                                         <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-user-minus">Désister</i>
+                                        <i class="fa-solid fa-user-minus"></i><!--Désister-->
                                     </button>
                                 {% else%}
+                                    &nbsp;
                                     <button
-                                        class="btn btn-danger del">
+                                        class="btn btn-inscrit">
                                     <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-user-plus">inscrire</i>
+                                        <i class="fa-solid fa-user-plus"></i><!--inscrire-->
                                     </button>{% endif %}
                             </td>
                         </tr>
@@ -199,9 +200,9 @@
                             <td>{% if inscrit %} x {% endif %}</td>
                             <td>{{ s.organisateur.nom }}</td>
                             <td> <button
-                                    class="btn btn-primary">
+                                    class="btn btn-afficher">
                                     <a href="{# {{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-eye">Afficher</i>
+                                        <i class="fa-solid fa-eye"></i><!--Afficher-->
                                 </button>
                             </td>
                         </tr>
@@ -210,12 +211,20 @@
         </tbody>
     </table>
         </div>
+    <div class="row">
     <div class="offset-1 col-9">
-        <button class="btn btn-secondary">
+        <button class="btn btn-action">
             <a href="{# {{ path('#',{id: user.id) }}#}"></a>
                 Créer une sortie
         </button>
+
     </div>
+    </div>
+    <div class="row">
+        </br>
+    </div>
+
+
 </div>
 
 <script>

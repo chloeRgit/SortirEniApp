@@ -24,12 +24,7 @@ h1 {
     text-align: center;
 }
 
-table tr th,
-table tr td{
-    width: 10em;
-    text-align: center;
-    border: 1px solid black;
-}
+
 
 #modification_profil label,
 #modification_profil input,
@@ -59,11 +54,97 @@ table tr td{
     margin-top: 2em;
 }
 
-.btn-container a{
+.btn-container a, btn-action{
     padding: 0.5em 1em;
     background-color: wheat;
     text-decoration: none;
     color: black;
     text-transform: uppercase;
+}
+.btn-action{
+    padding: 0.5em 1em!important;
+    background-color:#d1ecf1 !important;
+    text-decoration: none;
+    color: #042444!important;
+    margin-top: 10px;
+    border-color: #042444!important;
+   }
+.btn-afficher, .btn-modifier{
+    padding: 0.5em 1em!important;
+    background-color:#d1ecf1 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-afficher:hover,.btn-modifier:hover{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #d1ecf1!important;
+}
+.btn-inscrit{
+    padding: 0.5em 1em!important;
+    background-color:#b0b084 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-inscrit:hover{
+    padding: 0.5em 1em!important;
+    background-color: #042444!important;
+    text-decoration: none;
+    color: #b0b084!important;
+}
+.btn-annuler{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #ec1c1c!important;
+}
+.btn-annuler:hover{
+    padding: 0.5em 1em!important;
+    background-color:#ec1c1c !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-desister{
+    padding: 0.5em 1em!important;
+    background-color:#b0b084 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-desister:hover{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #ec1c1c!important;
+}
+.btn-publier{
+    padding: 0.5em 1em!important;
+    background-color:#f2e80e !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-publier:hover{
+    padding: 0.5em 1em!important;
+    background-color: #042444!important;
+    text-decoration: none;
+    color: #f2e80e!important;
+}
+.tab-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+.connectinfo{
+
+    text-align: right;
+}
+h1.titlefiltre{
+    text-align: left;
+}
+.blockfiltre{
+    margin-bottom: 30px;
 }
 
