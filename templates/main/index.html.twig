@@ -13,54 +13,59 @@
         <h1 class="titlefiltre">Filtrer les sorties</h1>
         <form action="{{ path('recherche') }}" method="post">
             <div class="row">
-            <div class="form-group col-md-4">
+            <div class="form-group col-md-5">
                 <label for="site-select">Site:</label>
                 <select id="site-select" class="form-control"name="site-select">
                     <option selected>Tous</option>
                     {% for ss in sites %}
-                    <option> {{ ss.nom }}</option>
+                        {% if (ss.nom == site)%}
+                        <option selected >{{ ss.nom}}</option>
+                        {%  else %}
+                        <option> {{ ss.nom }}</option>
+                        {% endif %}
+
                     {% endfor %}
                 </select>
                 <div class="form-group">
                     <label for="name-filter">Le nom de la sortie contient:</label>
-                    <input type="text" class="form-control" id="name-filter" name="name-filter" placeholder="Cinéma">
+                    <input type="text" class="form-control" id="name-filter" name="name-filter" value={% if(name!=null) %}{{ name }} {% else%} "" {%endif %} placeholder="Cinéma">
                 </div>
 
 
                     <div class="row">
                     <div class="form-group col-md-6">
                         <label for="date-deb">Entre:</label>
-                        <input onchange=dateFinMini(this.value) type="date" class="form-control" id="date-deb" name="date-deb" placeholder="Apartment, studio, or floor">
+                        <input onchange=dateFinMini(this.value) value={% if(datedeb!=null) %} {{ datedeb}} {% else%} "" {%endif %}type="date"  class="form-control" id="date-deb" name="date-deb" placeholder="Apartment, studio, or floor">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label for="date-fin">et</label>
-                        <input type="date" class="form-control" id="date-fin" name="date-fin" placeholder="Apartment, studio, or floor">
+                        <input type="date" class="form-control" value={% if(datefin!=null) %} {{ datefin}} {% else%} "" {%endif %} id="date-fin" name="date-fin" placeholder="Apartment, studio, or floor">
                     </div>
                     </div>
 
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-5">
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="organisateur-filter" name="organisateur-filter">
+                    <input class="form-check-input" type="checkbox" value="1" id="organisateur-filter" name="organisateur-filter" {% if(organisateurfilter!=null) %} checked {%endif %}>
                     <label class="form-check-label" for="organisateur-filter">
                         Sorties dont je suis organisateur
                     </label>
                     </div>
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="inscrit-filter" name="inscrit-filter">
+                    <input class="form-check-input" type="checkbox" value="1" id="inscrit-filter" name="inscrit-filter" {% if(inscritfilter!=null) %} checked {%endif %}>
                     <label class="form-check-label" for="inscrit-filter">
                         Sorties auxquelles je suis inscrit/e
                     </label>
                     </div>
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="noninscrit-filter" name="noninscrit-filter">
+                    <input class="form-check-input" type="checkbox" value="1" id="noninscrit-filter" name="noninscrit-filter"{% if(noninscritfilter!=null) %} checked {%endif %}>
                     <label class="form-check-label" for="noninscrit-filter">
                         Sorties auxquelles je ne suis pas inscrit/e
                     </label>
                     </div>
                     <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="1" id="passee-filter" name="passee-filter">
+                    <input class="form-check-input" type="checkbox" value="1" id="passee-filter" name="passee-filter"{% if(passeefilter!=null) %} checked {%endif %}>
                     <label class="form-check-label" for="noninscrit-filter">
                         Sorties passées
                     </label>
@@ -100,7 +105,7 @@
         {% for s in sorties %}
             {% set inscrit=false %}
             {% if (user in s.inscription)%} {% set inscrit=true %}{% endif %}
-            {% if (user==s.organisateur and s.etat.libelle=='Créee' ) %}
+            {% if (user==s.organisateur and s.etat.libelle=='Créée' ) %}
                 <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
@@ -123,7 +128,7 @@
                     </td>
                 </tr>
 
-                    {% elseif(user==s.organisateur and s.etat.libelle=='Ouverte')%}
+                    {% elseif(user==s.organisateur and (s.etat.libelle=='Ouverte'or s.etat.libelle=='Fermée'))%}
                         <tr>
                             <td>{{ s.nom }}</td>
                             <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>

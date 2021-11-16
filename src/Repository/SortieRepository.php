@@ -18,7 +18,16 @@ class SortieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Sortie::class);
     }
-    public function sortieFiltree($site=null,$nom=null,$datemin=null,$datemax=null,$organisateur=null,$passees=null)
+
+    public function FindAllOrderByDateSortie()
+    {
+        $entityManager=$this->getEntityManager();
+        $dql="SELECT s FROM App\Entity\Sortie s ORDER BY s.dateHeureDebut DESC";
+        $query=$entityManager->createQuery($dql);
+        return $query->getResult();
+    }
+
+        public function sortieFiltree($site=null,$nom=null,$datemin=null,$datemax=null,$organisateur=null,$passees=null)
     {
         $entityManager=$this->getEntityManager();
         $dql="SELECT s FROM App\Entity\Sortie s  WHERE s.site is not null";
@@ -41,6 +50,7 @@ class SortieRepository extends ServiceEntityRepository
         if($passees){
             $dql.=" AND s.dateHeureDebut<:passees";
         }
+        $dql.=" ORDER BY s.dateHeureDebut DESC";
 
         $query=$entityManager->createQuery($dql);
         if($site){
