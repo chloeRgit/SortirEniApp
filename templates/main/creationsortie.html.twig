@@ -15,11 +15,11 @@
         </div>
         <div>
             <label for="date-h-sortie">Date et heure de la sortie :</label>
-            <input type="datetime-local" name="date-h-sortie">
+            <input type="datetime-local" onchange=dateFinMini(this.value) id="date-h-sortie" name="date-h-sortie">
         </div>
         <div>
             <label for="date-l-sortie">Date limite de la sortie :</label>
-            <input type="date" name="date-l-sortie">
+            <input type="datetime-local" name="date-l-sortie" id="date-l-sortie">
         </div>
         <div>
             <label for="nbParticipant-sortie">Nombre de places :</label>
@@ -44,7 +44,7 @@
             <select id="ville-select" onchange=populateSelect(this.value) class="form-control" name="ville-select">
                 <option selected>Tous</option>
                 {% for vv in ville %}
-                    <option> {{ vv.nom }}</option>
+                    <option value="{{ vv.id }}"> {{ vv.nom }}</option>
                 {% endfor %}
             </select>
         </div>
@@ -72,49 +72,54 @@
 
         <div class="button-container">
             <button type="submit" name="action" value="1">Enregistrer</button>
+            <button type="submit" name="action" value="2">Publier</button>
         </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         function populateSelect(id) {
             //vider le select des lieux
-            var ele = document.getElementById('lieu-select');
-            ele.innerHTML = "";
+            document.getElementById('lieu-select').innerHTML = "";
             // THE JSON ARRAY.
-            let url='http://localhost/__symfony/SortirEniApp/public/api/select_lieu';
+            let url = 'http://localhost/__symfony/SortirEniApp/public/api/select_lieu';
             let url2 = url + '/' + id;
-            let tableau = [] ;
-            axios.get(url2).then( response => {
+            console.log(url2);
+            let tableau = [];
+            axios.get(url2).then(response => {
                 tableau = response.data;
-
+                var ele = document.getElementById('lieu-select');
                 for (var i = 0; i < tableau.length; i++) {
-                        ele.innerHTML = ele.innerHTML +
-                            '<option value="' + tableau[i]['id'] + '" selected>' + tableau[i]['nom'] + '</option>';
+                    ele.innerHTML = ele.innerHTML +
+                        '<option value="' + tableau[i]['id'] + '" selected>' + tableau[i]['nom'] + '</option>';
                 }
             })
         }
 
         function showInfo(id) {
             // Vider les inputs des lieux
-            document.getElementById('rue-lieu-sortie').value="";
-            document.getElementById('cp-lieu-sortie').value="";
-            document.getElementById('lat-lieu-sortie').value="";
-            document.getElementById('long-lieu-sortie').value="";
+            document.getElementById('rue-lieu-sortie').value = "";
+            document.getElementById('cp-lieu-sortie').value = "";
+            document.getElementById('lat-lieu-sortie').value = "";
+            document.getElementById('long-lieu-sortie').value = "";
             // THE JSON ARRAY.
-            let url='http://localhost/__symfony/SortirEniApp/public/api/info_lieu';
+            let url = 'http://localhost/__symfony/SortirEniApp/public/api/info_lieu';
             let url2 = url + '/' + id;
-            let tableau = [] ;
-            axios.get(url2).then( response => {
+            let tableau = [];
+            axios.get(url2).then(response => {
                 console.log(url2);
                 tableau = response.data;
                 console.log(response.data);
-                document.getElementById('rue-lieu-sortie').value=tableau[0];
-                document.getElementById('cp-lieu-sortie').value=tableau[1];
-                document.getElementById('lat-lieu-sortie').value=tableau[2];
-                document.getElementById('long-lieu-sortie').value=tableau[3];
+                document.getElementById('rue-lieu-sortie').value = tableau[0];
+                document.getElementById('cp-lieu-sortie').value = tableau[1];
+                document.getElementById('lat-lieu-sortie').value = tableau[2];
+                document.getElementById('long-lieu-sortie').value = tableau[3];
                 console.log(tableau['rue']);
                 var cpSortie = document.getElementById('cp-lieu-sortie');
             })
+        }
+        function dateFinMini(value) {
+            //alert(value);
+            document.getElementById("date-l-sortie").setAttribute("max",value);
         }
     </script>
 {% endblock %}
