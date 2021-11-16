@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Repository\EtatRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
+use DateInterval;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,13 +16,69 @@ class MainController extends AbstractController
     /**
      * @Route("/", name="main")
      */
-    public function index(SortieRepository $repo, SiteRepository $repoSite): Response
+    public function index(SortieRepository $repo, SiteRepository $repoSite,EtatRepository $repoEtat): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        $sorties=$repo->findAll();
+        //recuperation des données
+        $sorties=$repo->FindAllOrderByDateSortie();
+
+
+        //$sorties=$repo->findBy(['dateHeureDebut' => 'ASC']);
+
         $user=$this->getUser();
         $sites=$repoSite->findAll();
 
+        //update des états
+        $etatouvert=$repoEtat->findOneBy(['libelle'=>'Ouverte']);
+        $etatcloture=$repoEtat->findOneBy(['libelle'=>'Fermée']);
+        $etatencours=$repoEtat->findOneBy(['libelle'=>'En cours']);
+        $etatpasse=$repoEtat->findOneBy(['libelle'=>'Passée']);
+        $now =new \DateTime();
+
+        $em=$this->getDoctrine()->getManager();
+
+
+        foreach ($sorties as $s ) {
+           $dtdebh =$s->getDateHeureDebut();
+           $time = new \DateTime($s->getDateHeureDebut()->format('Y-m-d H:i:s'));
+           $time->add(new DateInterval('PT' . $s->getDuree() . 'M'));
+           $dtfinh = $time->format('Y-m-d H:i');
+
+            if(count($s->getInscription())>=$s->getNbInscriptionsMax() && $s->getEtat()->getId()==$etatouvert->getId()){
+                $s->setEtat($etatcloture);
+                $em->persist($s);
+                $em->flush();
+            }
+            if(count($s->getInscription())<$s->getNbInscriptionsMax() && $s->getEtat()->getId()==$etatcloture->getId() && $s->getDateLimiteInscription()->format("Y-m-d H:i:s")<=$now->format("Y-m-d H:i:s")){
+                $s->setEtat($etatouvert);
+                $em->persist($s);
+                $em->flush();
+              }
+
+            if($s->getEtat()->getId()==$etatouvert->getId() && ($s->getDateLimiteInscription()->format("Y-m-d H:i:s")<$now->format("Y-m-d H:i:s"))){
+
+                $s->setEtat($etatcloture);
+                $em->persist($s);
+                $em->flush();
+            }
+           if(($s->getEtat()->getId()==$etatouvert->getId()|| $s->getEtat()->getId()==$etatcloture->getId())
+                && ($dtdebh->format("Y-m-d H:i:s")<$now->format("Y-m-d H:i:s")
+                    && $dtfinh>$now->format("Y-m-d H:i:s")) ){
+
+                $s->setEtat($etatencours);
+                $em->persist($s);
+                $em->flush();
+            }
+            if(($s->getEtat()->getId()==$etatencours->getId()|| $s->getEtat()->getId()==$etatcloture->getId()||$s->getEtat()->getId()==$etatencours->getId()) && $dtfinh<$now->format("Y-m-d H:i:s")) {
+
+                $s->setEtat($etatpasse);
+                $em->persist($s);
+                $em->flush();
+            }
+
+
+
+        }
 
 
         return $this->render('main/index.html.twig', [
@@ -28,6 +86,14 @@ class MainController extends AbstractController
             'user'=>$user,
             'sites'=>$sites,
             'controller_name' => 'MainController',
+            'site'=>null,
+            'name'=>null,
+            'datedeb'=>null,
+            'datefin'=>null,
+            'organisateurfilter'=>null,
+            'inscritfilter'=>null,
+            'noninscritfilter'=>null,
+            'passeefilter'=>null,
         ]);
     }
 
@@ -74,7 +140,8 @@ class MainController extends AbstractController
         }
         //date de fin
         if($datefinresp!=""){
-            $datefin=$datefinresp;
+
+            $datefin=$datefinresp.'23:59:59';
         }
         //nom contient
         if($nameresp!=""){
@@ -83,8 +150,9 @@ class MainController extends AbstractController
         //sorties passees
         if($passeeresp==true){
             $passee = date_create()->format('Y-m-d');
-        }
+        } else{$passeeresp=null;}
         $sortiesFiltrees=$repo->sortieFiltree($site,$nom,$datedeb,$datefin,$organisateur,$passee);
+
         //recuperation des sorties pre-filtrees sur les criteres(site,organisateur,date de debut,date de fin,nom contient,sorties passees)
         $sorties=$sortiesFiltrees;
 
@@ -103,7 +171,10 @@ class MainController extends AbstractController
                         }
                 }
             }
+            $inscritresp=true;
+            $noninscritresp=null;
         }
+
         //l'utilisateur n'est pas inscrit
         if($noninscritresp && !$inscritresp) {
             $inscrit = $this->getUser();
@@ -126,6 +197,8 @@ class MainController extends AbstractController
                     array_push($sorties, $s);
                 }
             }
+            $inscritresp=null;
+            $noninscritresp=true;
         }
 
 
@@ -134,6 +207,14 @@ class MainController extends AbstractController
            'sorties'=>$sorties,
             'user'=>$user,
             'sites'=>$sites,
+            'site'=>$siteresp,
+            'name'=>$nameresp,
+            'datedeb'=>$datedebresp,
+            'datefin'=>$datefinresp,
+            'organisateurfilter'=>$organisateurresp,
+            'inscritfilter'=>$inscritresp,
+            'noninscritfilter'=>$noninscritresp,
+            'passeefilter'=>$passeeresp,
 
         ]);}
 
