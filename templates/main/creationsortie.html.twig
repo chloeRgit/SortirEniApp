@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet"/>
+    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
+{% endblock %}
+
+
+{% block body %}
+    <h1> Création d'une sortie </h1>
+
+    <form name="creation_sortie" class="create_sortie" action="{{ path('app_sortie') }}" method="post">
+        <div>
+            <label for="titre-sortie">Nom de la sortie :</label>
+            <input type="text" name="titre-sortie">
+        </div>
+        <div>
+            <label for="date-h-sortie">Date et heure de la sortie :</label>
+            <input type="datetime-local" onchange=dateFinMini(this.value) id="date-h-sortie" name="date-h-sortie">
+        </div>
+        <div>
+            <label for="date-l-sortie">Date limite de la sortie :</label>
+            <input type="datetime-local" name="date-l-sortie" id="date-l-sortie">
+        </div>
+        <div>
+            <label for="nbParticipant-sortie">Nombre de places :</label>
+            <input type="number" name="nbParticipant-sortie">
+        </div>
+        <div>
+            <label for="duree-sortie">Durée :</label>
+            <p><input type="number" name="duree-sortie"> minutes </p>
+        </div>
+        <div>
+            <label for="desc-sortie">Descriptions et infos :</label>
+            <textarea name="desc-sortie">
+
+        </textarea>
+        </div>
+        <div>
+            <label for="ville-org-sortie">Ville organisatrice de la sortie :</label>
+            <input type="text" name="ville-org-sortie" disabled value="{{ siteOrganisateur }}">
+        </div>
+        <div>
+            <label for="ville-select">Ville:</label>
+            <select id="ville-select" onchange=populateSelect(this.value) class="form-control" name="ville-select">
+                <option selected>Tous</option>
+                {% for vv in ville %}
+                    <option value="{{ vv.id }}"> {{ vv.nom }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label for="lieu-select">Lieu:</label>
+            <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select">
+            </select>
+        </div>
+        <div>
+            <label for="rue-lieu-sortie">Rue :</label>
+            <input type="text" name="rue-lieu-sortie" id="rue-lieu-sortie" disabled value="">
+        </div>
+        <div>
+            <label for="cp-lieu-sortie">Code postal :</label>
+            <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie" disabled value="">
+        </div>
+        <div>
+            <label for="lat-lieu-sortie">Latitude :</label>
+            <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001" id="lat-lieu-sortie">
+        </div>
+        <div>
+            <label for="long-lieu-sortie">Longitude :</label>
+            <input type="number" name="long-lieu-sortie" min="-180" max="180" step=".0000001" id="long-lieu-sortie">
+        </div>
+
+        <div class="button-container">
+            <button type="submit" name="action" value="1">Enregistrer</button>
+            <button type="submit" name="action" value="2">Publier</button>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function populateSelect(id) {
+            //vider le select des lieux
+            document.getElementById('lieu-select').innerHTML = "";
+            // THE JSON ARRAY.
+            let url = 'http://localhost/__symfony/SortirEniApp/public/api/select_lieu';
+            let url2 = url + '/' + id;
+            console.log(url2);
+            let tableau = [];
+            axios.get(url2).then(response => {
+                tableau = response.data;
+                var ele = document.getElementById('lieu-select');
+                for (var i = 0; i < tableau.length; i++) {
+                    ele.innerHTML = ele.innerHTML +
+                        '<option value="' + tableau[i]['id'] + '" selected>' + tableau[i]['nom'] + '</option>';
+                }
+            })
+        }
+
+        function showInfo(id) {
+            // Vider les inputs des lieux
+            document.getElementById('rue-lieu-sortie').value = "";
+            document.getElementById('cp-lieu-sortie').value = "";
+            document.getElementById('lat-lieu-sortie').value = "";
+            document.getElementById('long-lieu-sortie').value = "";
+            // THE JSON ARRAY.
+            let url = 'http://localhost/__symfony/SortirEniApp/public/api/info_lieu';
+            let url2 = url + '/' + id;
+            let tableau = [];
+            axios.get(url2).then(response => {
+                console.log(url2);
+                tableau = response.data;
+                console.log(response.data);
+                document.getElementById('rue-lieu-sortie').value = tableau[0];
+                document.getElementById('cp-lieu-sortie').value = tableau[1];
+                document.getElementById('lat-lieu-sortie').value = tableau[2];
+                document.getElementById('long-lieu-sortie').value = tableau[3];
+                console.log(tableau['rue']);
+                var cpSortie = document.getElementById('cp-lieu-sortie');
+            })
+        }
+        function dateFinMini(value) {
+            //alert(value);
+            document.getElementById("date-l-sortie").setAttribute("max",value);
+        }
+    </script>
+{% endblock %}
