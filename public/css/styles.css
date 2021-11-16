@@ -1,9 +1,30 @@
-table tr th,
-table tr td{
-    width: 10em;
-    text-align: center;
-    border: 1px solid black;
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+html {
+    height: 100vh;
 }
+
+body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    padding: 30px 0;
+    margin-bottom: 0;
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    text-align: center;
+}
+
+
 
 #modification_profil label,
 #modification_profil input,
@@ -28,19 +49,124 @@ table tr td{
     display: inline-block!important;
 }
 
-h1{
-    text-align: center;
-}
-
 .btn-container{
     text-align: center;
     margin-top: 2em;
 }
 
-.btn-container a{
+.btn-container a, btn-action{
     padding: 0.5em 1em;
     background-color: wheat;
     text-decoration: none;
     color: black;
     text-transform: uppercase;
+}
+.btn-action{
+    padding: 0.5em 1em!important;
+    background-color:#d1ecf1 !important;
+    text-decoration: none;
+    color: #042444!important;
+    margin-top: 10px;
+    border-color: #042444!important;
+}
+.btn-afficher, .btn-modifier{
+    padding: 0.5em 1em!important;
+    background-color:#d1ecf1 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-afficher:hover,.btn-modifier:hover{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #d1ecf1!important;
+}
+.btn-inscrit{
+    padding: 0.5em 1em!important;
+    background-color:#b0b084 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-inscrit:hover{
+    padding: 0.5em 1em!important;
+    background-color: #042444!important;
+    text-decoration: none;
+    color: #b0b084!important;
+}
+.btn-annuler{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #ec1c1c!important;
+}
+.btn-annuler:hover{
+    padding: 0.5em 1em!important;
+    background-color:#ec1c1c !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-desister{
+    padding: 0.5em 1em!important;
+    background-color:#b0b084 !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-desister:hover{
+    padding: 0.5em 1em!important;
+    background-color:#042444 !important;
+    text-decoration: none;
+    color: #ec1c1c!important;
+}
+.btn-publier{
+    padding: 0.5em 1em!important;
+    background-color:#f2e80e !important;
+    text-decoration: none;
+    color: #042444!important;
+}
+.btn-publier:hover{
+    padding: 0.5em 1em!important;
+    background-color: #042444!important;
+    text-decoration: none;
+    color: #f2e80e!important;
+}
+.tab-scrollbar {
+    position: relative;
+    height: 300px;
+    overflow: auto;
+}
+.table-wrapper-scroll-y {
+    display: block;
+}
+.connectinfo{
+
+    text-align: right;
+}
+h1.titlefiltre{
+    text-align: left;
+}
+.blockfiltre{
+    margin-bottom: 30px;
+}
+
+.create_sortie .button-container{
+    text-align: center;
+    margin-top: 2em;
+}
+
+.create_sortie .col-lg-6 div{
+    margin: 1em 0!important;
+}
+
+select{
+    display: inline-block!important;
+    width: auto!important;
+}
+
+.create_sortie input{
+    min-width: 30%!important;;
+    text-align: center;
+}
+
+#duree-sortie{
+    margin-right: 0.5em;
 }

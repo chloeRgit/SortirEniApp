@@ -1,14 +1,10 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet"/>
-    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
-{% endblock %}
-
 
 {% block body %}
     <h1> Création d'une sortie </h1>
-
     <form name="creation_sortie" class="create_sortie" action="{{ path('app_sortie') }}" method="post">
+        <div class="row">
+        <div class="col-lg-6">
         <div>
             <label for="titre-sortie">Nom de la sortie :</label>
             <input type="text" name="titre-sortie">
@@ -27,7 +23,7 @@
         </div>
         <div>
             <label for="duree-sortie">Durée :</label>
-            <p><input type="number" name="duree-sortie"> minutes </p>
+            <p><input type="number" name="duree-sortie" id="duree-sortie"> minutes </p>
         </div>
         <div>
             <label for="desc-sortie">Descriptions et infos :</label>
@@ -35,6 +31,8 @@
 
         </textarea>
         </div>
+        </div>
+        <div class="col-lg-6">
         <div>
             <label for="ville-org-sortie">Ville organisatrice de la sortie :</label>
             <input type="text" name="ville-org-sortie" disabled value="{{ siteOrganisateur }}">
@@ -63,18 +61,21 @@
         </div>
         <div>
             <label for="lat-lieu-sortie">Latitude :</label>
-            <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001" id="lat-lieu-sortie">
+            <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001" disabled id="lat-lieu-sortie">
         </div>
         <div>
             <label for="long-lieu-sortie">Longitude :</label>
-            <input type="number" name="long-lieu-sortie" min="-180" max="180" step=".0000001" id="long-lieu-sortie">
+            <input type="number" name="long-lieu-sortie" min="-180" max="180" step=".0000001" disabled id="long-lieu-sortie">
+        </div>
         </div>
 
         <div class="button-container">
-            <button type="submit" name="action" value="1">Enregistrer</button>
-            <button type="submit" name="action" value="2">Publier</button>
+            <button class="btn-action" type="submit" name="action" value="1">Enregistrer</button>
+            <button class="btn-action" type="submit" name="action" value="2">Publier</button>
+        </div>
         </div>
     </form>
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         function populateSelect(id) {
@@ -83,14 +84,20 @@
             // THE JSON ARRAY.
             let url = 'http://localhost/__symfony/SortirEniApp/public/api/select_lieu';
             let url2 = url + '/' + id;
+            var ele = document.getElementById('lieu-select');
             console.log(url2);
             let tableau = [];
             axios.get(url2).then(response => {
                 tableau = response.data;
-                var ele = document.getElementById('lieu-select');
+                console.log(response.data);
+                var opt = document.createElement('option');
+                opt.value = 0;
+                opt.innerHTML = "Tous";
+                opt.selected = true;
+                ele.appendChild(opt);
                 for (var i = 0; i < tableau.length; i++) {
                     ele.innerHTML = ele.innerHTML +
-                        '<option value="' + tableau[i]['id'] + '" selected>' + tableau[i]['nom'] + '</option>';
+                        '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + '</option>';
                 }
             })
         }

@@ -148,9 +148,18 @@ class SortieController extends AbstractController
             ]
         );
 
+
         $lieux = $lieuRepo->LieuFiltre($ville);
 
-        return $this->json($lieux);
+        $tabLieux = array();
+        $compteur=0;
+        foreach ($lieux as $l){
+            $tabLieux[$compteur]["id"] = $l->getId();
+            $tabLieux[$compteur]["nom"] = $l->getNom();
+            $compteur++;
+        }
+
+        return $this->json($tabLieux);
     }
 
     /**
