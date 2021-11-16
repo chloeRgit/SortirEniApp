@@ -105,7 +105,7 @@
         {% for s in sorties %}
             {% set inscrit=false %}
             {% if (user in s.inscription)%} {% set inscrit=true %}{% endif %}
-            {% if (user==s.organisateur and s.etat.libelle=='Créee' ) %}
+            {% if (user==s.organisateur and s.etat.libelle=='Créée' ) %}
                 <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>

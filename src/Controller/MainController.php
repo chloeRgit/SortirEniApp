@@ -19,12 +19,9 @@ class MainController extends AbstractController
     public function index(SortieRepository $repo, SiteRepository $repoSite,EtatRepository $repoEtat): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
         //recuperation des données
         $sorties=$repo->FindAllOrderByDateSortie();
-
-
-        //$sorties=$repo->findBy(['dateHeureDebut' => 'ASC']);
-
         $user=$this->getUser();
         $sites=$repoSite->findAll();
 
