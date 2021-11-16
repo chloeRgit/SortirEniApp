@@ -41,23 +41,26 @@ class MainController extends AbstractController
            $time->add(new DateInterval('PT' . $s->getDuree() . 'M'));
            $dtfinh = $time->format('Y-m-d H:i');
 
+            //nb inscrits max atteint ouvert->fermé
             if(count($s->getInscription())>=$s->getNbInscriptionsMax() && $s->getEtat()->getId()==$etatouvert->getId()){
                 $s->setEtat($etatcloture);
                 $em->persist($s);
                 $em->flush();
             }
+            //nb inscrits <max et date de cloture non passée fermé->ouvert
             if(count($s->getInscription())<$s->getNbInscriptionsMax() && $s->getEtat()->getId()==$etatcloture->getId() && $s->getDateLimiteInscription()->format("Y-m-d H:i:s")<=$now->format("Y-m-d H:i:s")){
                 $s->setEtat($etatouvert);
                 $em->persist($s);
                 $em->flush();
               }
-
+            //date>date de cloture ouvert->fermée
             if($s->getEtat()->getId()==$etatouvert->getId() && ($s->getDateLimiteInscription()->format("Y-m-d H:i:s")<$now->format("Y-m-d H:i:s"))){
 
                 $s->setEtat($etatcloture);
                 $em->persist($s);
                 $em->flush();
             }
+            //activité en cours. ouvert/fermé->Encours
            if(($s->getEtat()->getId()==$etatouvert->getId()|| $s->getEtat()->getId()==$etatcloture->getId())
                 && ($dtdebh->format("Y-m-d H:i:s")<$now->format("Y-m-d H:i:s")
                     && $dtfinh>$now->format("Y-m-d H:i:s")) ){
@@ -66,8 +69,9 @@ class MainController extends AbstractController
                 $em->persist($s);
                 $em->flush();
             }
-            if(($s->getEtat()->getId()==$etatencours->getId()|| $s->getEtat()->getId()==$etatcloture->getId()||$s->getEtat()->getId()==$etatencours->getId()) && $dtfinh<$now->format("Y-m-d H:i:s")) {
-
+           //activité passée date>date de fin. ouvert/fermé/en cours->Passé
+            if(($s->getEtat()->getId()==$etatencours->getId()|| $s->getEtat()->getId()==$etatcloture->getId()||$s->getEtat()->getId()==$etatouvert->getId()) && $dtfinh<$now->format("Y-m-d H:i:s")) {
+dd($s);
                 $s->setEtat($etatpasse);
                 $em->persist($s);
                 $em->flush();
@@ -214,6 +218,7 @@ class MainController extends AbstractController
             'passeefilter'=>$passeeresp,
 
         ]);}
+
 
 
 

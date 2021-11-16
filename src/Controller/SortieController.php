@@ -186,5 +186,29 @@ class SortieController extends AbstractController
 
         return $this->json($tabLieu);
     }
+    /**
+     * @Route("/inscrire/{id}", name="inscrire")
+     * @param SortieRepository $repo
+     * @return Response
+     */
+    public function inscrire(Sortie $sortie,EntityManagerInterface $em): Response
+    {   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user=$this->getUser();
+        $sortie->addInscription($user);
+        $em->flush();
+        return $this->redirectToRoute('main');
+    }
+    /**
+     * @Route("/desister/{id}", name="desister")
+     * @param SortieRepository $repo
+     * @return Response
+     */
+    public function desister(Sortie $sortie,EntityManagerInterface $em): Response
+    {   $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $user=$this->getUser();
+        $sortie->removeInscription($user);
+        $em->flush();
+        return $this->redirectToRoute('main');
+    }
 
 }

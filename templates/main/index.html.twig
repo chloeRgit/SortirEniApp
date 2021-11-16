@@ -108,7 +108,7 @@
             {% if (user==s.organisateur and s.etat.libelle=='Créée' ) %}
                 <tr>
                     <td>{{ s.nom }}</td>
-                    <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                    <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
                     <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
                     <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
                     <td>{{ s.etat.libelle }}</td>
@@ -131,7 +131,7 @@
                     {% elseif(user==s.organisateur and (s.etat.libelle=='Ouverte'or s.etat.libelle=='Fermée'))%}
                         <tr>
                             <td>{{ s.nom }}</td>
-                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
                             <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
                             <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
                             <td>{{ s.etat.libelle }}</td>
@@ -151,7 +151,7 @@
                     {% elseif(user==s.organisateur and (s.etat.libelle=='En cours'or s.etat.libelle=='Passée' or s.etat.libelle=='Annulée'))%}
                         <tr>
                             <td>{{ s.nom }}</td>
-                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
                             <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
                             <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
                             <td>{{ s.etat.libelle }}</td>
@@ -168,7 +168,7 @@
                     {% elseif(user!=s.organisateur and (s.etat.libelle=='Ouverte' or s.etat.libelle=='Fermée' ))%}
                         <tr>
                             <td>{{ s.nom }}</td>
-                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
                             <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
                             <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
                             <td>{{ s.etat.libelle }}</td>
@@ -183,22 +183,22 @@
                                     &nbsp;
                                     <button
                                         class="btn btn-desister">
-                                        <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-user-minus"></i><!--Désister-->
+                                        <a href="{{ path('desister',{id: s.id}) }}">
+                                        <i class="fa-solid fa-user-minus"></i><!--Désister--> </a>
                                     </button>
                                 {% else%}
-                                    &nbsp;
+                                    &nbsp;{% if(s.etat.libelle=='Ouverte') %}
                                     <button
                                         class="btn btn-inscrit">
-                                    <a href="{#{{ path('#',{id: s.id}) }}#}"></a>
-                                        <i class="fa-solid fa-user-plus"></i><!--inscrire-->
-                                    </button>{% endif %}
+                                    <a href="{{ path('inscrire',{id: s.id}) }}">
+                                        <i class="fa-solid fa-user-plus"></i><!--inscrire--></a>
+                                    </button>{% endif %}{% endif %}
                             </td>
                         </tr>
                     {% elseif(user!=s.organisateur and (s.etat.libelle=='En cours' or s.etat.libelle=='Passée' or s.etat.libelle=='Annulée' ))%}
                         <tr>
                             <td>{{ s.nom }}</td>
-                            <td>{{ s.dateHeureDebut |date("d/m/Y H:m")}}</td>
+                            <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
                             <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
                             <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
                             <td>{{ s.etat.libelle }}</td>
