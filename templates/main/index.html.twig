@@ -98,50 +98,49 @@
             </form>
 
 
-        </div>
     </div>
-    <div class="row">
-        <div class="table-wrapper-scroll-y tab-scrollbar col-9 blocktableau">
-            <table class="table  table-striped mb-0">
-                <thead>
+</div>
+<div class="row">
+    <div class="table-wrapper-scroll-y tab-scrollbar offset-1 col-9 blocktableau">
+    <table class="table  table-striped mb-0">
+        <thead>
+        <tr>
+            <th scope="col">Nom de la sortie</th>
+            <th scope="col">Date de la sortie</th>
+            <th scope="col">Clôture</th>
+            <th scope="col">Inscrits/places</th>
+            <th scope="col">Etat</th>
+            <th scope="col">Inscrit</th>
+            <th scope="col">Organisateur</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for s in sorties %}
+            {% set inscrit=false %}
+            {% if (user in s.inscription)%} {% set inscrit=true %}{% endif %}
+            {% if (user==s.organisateur and s.etat.libelle=='Créée' ) %}
                 <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Clôture</th>
-                    <th scope="col">Inscrits/places</th>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
+                    <td>{{ s.nom }}</td>
+                    <td>{{ s.dateHeureDebut |date("d/m/Y H:i")}}</td>
+                    <td>{{ s.dateLimiteInscription |date("d/m/Y")}}</td>
+                    <td>{{ s.inscription|length}} / {{ s.nbInscriptionsMax}}  </td>
+                    <td>{{ s.etat.libelle }}</td>
+                    <td></td>
+                    <td>{{ s.organisateur.nom }}</td>
+                    <td> <button
+                                class="btn btn-modifier">
+                            <a href="{{ path('edit_sortie',{id: s.id}) }}">
+                                <i class="fa-solid fa-edit"></i></a><!--Modifier-->
+                        </button>
+                        &nbsp;
+                        <button
+                                class="btn btn-publier">
+                            <a href="{{ path('sortie',{id: s.id}) }}">
+                                <i class="fa-solid fa-paper-plane"></i></a><!--Publier-->
+                        </button>
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for s in sorties %}
-                    {% set inscrit=false %}
-                    {% if (user in s.inscription) %} {% set inscrit=true %}{% endif %}
-                    {% if (user==s.organisateur and s.etat.libelle=='Créée' ) %}
-                        <tr>
-                            <td>{{ s.nom }}</td>
-                            <td>{{ s.dateHeureDebut |date("d/m/Y H:i") }}</td>
-                            <td>{{ s.dateLimiteInscription |date("d/m/Y") }}</td>
-                            <td>{{ s.inscription|length }} / {{ s.nbInscriptionsMax }}  </td>
-                            <td>{{ s.etat.libelle }}</td>
-                            <td></td>
-                            <td>{{ s.organisateur.nom }}</td>
-                            <td>
-                                <button
-                                        class="btn btn-modifier">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-edit"></i><!--Modifier-->
-                                </button>
-                                &nbsp;
-                                <button
-                                        class="btn btn-publier">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-paper-plane"></i><!--Publier-->
-                                </button>
-                            </td>
-                        </tr>
 
                     {% elseif(user==s.organisateur and (s.etat.libelle=='Ouverte'or s.etat.libelle=='Fermée')) %}
                         <tr>
@@ -152,15 +151,14 @@
                             <td>{{ s.etat.libelle }}</td>
                             <td></td>
                             <td>{{ s.organisateur.nom }}</td>
-                            <td>
-                                <button class="btn btn-afficher">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-eye"></i><!--Afficher-->
+                            <td><button class="btn btn-afficher">
+                                    <a href="{{ path('sortie',{id: s.id}) }}">
+                                        <i class="fa-solid fa-eye"></i></a><!--Afficher-->
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-annuler">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa fa-trash"></i><!--Annuler-->
+                                        <a href="{#{{ path('#',{id: s.id}) }}#}">
+                                        <i class="fa-solid fa fa-trash"></i></a><!--Annuler-->
                                 </button>
                             </td>
                         </tr>
@@ -177,8 +175,8 @@
                                 <button
 
                                         class="btn btn-afficher">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-eye"></i><!--Afficher-->
+                                    <a href="{{ path('sortie',{id: s.id}) }}">
+                                        <i class="fa-solid fa-eye"></i></a><!--Afficher-->
                                 </button>
                             </td>
                         </tr>
@@ -194,8 +192,8 @@
                             <td>
                                 <button
                                         class="btn btn-afficher">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-eye"></i><!--Afficher-->
+                                    <a href="{{ path('sortie',{id: s.id}) }}">
+                                        <i class="fa-solid fa-eye"></i></a><!--Afficher-->
                                 </button>
                                 {% if inscrit %}
                                     &nbsp;
@@ -221,11 +219,10 @@
                             <td>{{ s.etat.libelle }}</td>
                             <td>{% if inscrit %} x {% endif %}</td>
                             <td>{{ s.organisateur.nom }}</td>
-                            <td>
-                                <button
-                                        class="btn btn-afficher">
-                                    <a href="{# {{ path('#',{id: s.id}) }} #}"></a>
-                                    <i class="fa-solid fa-eye"></i><!--Afficher-->
+                            <td> <button
+                                    class="btn btn-afficher">
+                                    <a href="{{ path('sortie',{id: s.id}) }}">
+                                        <i class="fa-solid fa-eye"></i></a><!--Afficher-->
                                 </button>
                             </td>
                         </tr>
@@ -234,12 +231,12 @@
                 </tbody>
             </table>
         </div>
-        <div class="row">
-            <div class=" col-9">
-                <button class="btn btn-action">
-                    <a href="{# {{ path('#',{id: user.id) }} #}"></a>
-                    Créer une sortie
-                </button>
+    <div class="row">
+    <div class="offset-1 col-9">
+        <button class="btn btn-action">
+            <a href="{{ path('app_sortie')}}"></a>
+                Créer une sortie
+        </button>
 
             </div>
         </div>

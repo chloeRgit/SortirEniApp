@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Afficher une sortie </h1>
+
+        <div class="row">
+        <div class="col-lg-6">
+                <div>
+                    <p>Nom de la sortie :   {{ s.nom }} </p>
+                </div>
+                <div>
+                    <p>Date et heure de la sortie :  {{ s.dateHeureDebut |date("d/m/Y H:i:s")}}</p>
+                </div>
+                <div>
+                    <p>Date limite d'inscription :  {{ s.dateLimiteInscription |date("d/m/Y")}}</p>
+                </div>
+                <div>
+                    <p> Nombre de places:  {{ s.nbInscriptionsMax}} </p>
+                </div>
+                <div>
+                    <p>Durée :  {{ s.duree }}  minutes</p>
+                </div>
+                <div>
+                    <p>Descriptions et infos :</p>
+                    <textarea class="description_sortie"disabled name="desc-sortie">{{ s.infosSortie }}
+                    </textarea>
+                </div>
+        </div>
+        <div class="col-lg-6">
+                <div>
+                    <p> Ville organisatrice :  {{ s.site.nom }}</p>
+                </div>
+                <div>
+                    <p> Lieu:  {{ s.lieu.nom }}</p>
+                </div>
+                <div>
+                    <p>Rue :  {{ s.lieu.rue }}</p>
+                </div>
+                <div>
+                 <p>Code postal :  {{  s.lieu.ville.codePostal }}</p>
+                </div>
+                <div>
+                    <p>Ville :  {{  s.lieu.ville.nom}}</p>
+                </div>
+                <div>
+                    <p>Latitude :  {{  s.lieu.latitude }}</p>
+                </div>
+                <div>
+                    <p>Longitude :  {{  s.lieu.longitude }}</p>
+                </div>
+        </div>
+        </div>
+    <div class="row">
+
+     <div class=" col-lg-6">
+        <h3>Liste des participants inscrits</h3>
+        <table class="table table-hover  table-striped mb-0  liste-participant">
+            <thead>
+            <tr>
+                <th scope="col">Pseudo</th>
+                <th scope="col">Nom</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in s.inscription %}
+            <tr id='Selectparticipant_{{ p.id }}' onclick="fnShowProfil({{ p.id }})" >
+                <td>{{ p.pseudo }}</td>
+                <td>{{ p.nom}} {{ p.prenom}}</td>
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+
+            <script>
+
+                function fnShowProfil(id){
+
+                    let url = 'http://localhost/symfony/SortirEniApp/public/profil/'+id;
+
+                    window.location.href =url
+                }
+            </script>
+
+
+{% endblock %}
+
+

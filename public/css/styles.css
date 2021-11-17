@@ -25,6 +25,18 @@ h1 {
 }
 
 
+
+#modification_profil label,
+#modification_profil input,
+#modification_profil select{
+    display: block!important;
+    width: auto!important;
+}
+
+#modification_profil .mb-3{
+    margin: 1em 0!important;
+}
+
 .row{
     display: flex;
     justify-content: center;
@@ -175,9 +187,19 @@ h1.titlefiltre{
     margin: 1em 0!important;
 }
 
+.create_sortie select{
+    display: inline-block!important;
+    width: auto!important;
+}
 select{
     display: inline-block!important;
     width: auto!important;
+}
+
+
+.create_sortie input{
+    min-width: 30%!important;;
+    text-align: center;
 }
 
 #duree-sortie{
@@ -325,4 +347,12 @@ input{
 
 .row.home .col-lg-6{
     margin: 0!important;
+}
+.description_sortie{
+    width: 250px;
+    height: 100px;
+    text-align: left;
+}
+.clickable-row{
+    cursor:pointer;
 }

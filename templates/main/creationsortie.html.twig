@@ -82,7 +82,7 @@
             //vider le select des lieux
             document.getElementById('lieu-select').innerHTML = "";
             // THE JSON ARRAY.
-            let url = 'http://localhost/__symfony/SortirEniApp/public/api/select_lieu';
+            let url = 'http://localhost/symfony/SortirEniApp/public/api/select_lieu';
             let url2 = url + '/' + id;
             var ele = document.getElementById('lieu-select');
             console.log(url2);
@@ -109,7 +109,7 @@
             document.getElementById('lat-lieu-sortie').value = "";
             document.getElementById('long-lieu-sortie').value = "";
             // THE JSON ARRAY.
-            let url = 'http://localhost/__symfony/SortirEniApp/public/api/info_lieu';
+            let url = 'http://localhost/symfony/SortirEniApp/public/api/info_lieu';
             let url2 = url + '/' + id;
             let tableau = [];
             axios.get(url2).then(response => {
