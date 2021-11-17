@@ -78,6 +78,7 @@ h1 {
 }
 .btn-afficher i, .btn-modifier i{
     color: #042444!important;
+    max-width: 14px;
 }
 
 .btn-afficher:hover,.btn-modifier:hover{
@@ -113,6 +114,7 @@ h1 {
 }
 .btn-annuler i {
     color: #ec1c1c!important;
+    max-width: 14px;
 }
 .btn-annuler:hover{
     padding: 0.5em 1em!important;
@@ -149,6 +151,7 @@ h1 {
 }
 .btn-publier:hover i {
     color: #042444!important;
+
 }
 .btn-publier{
     padding: 0.5em 1em!important;
@@ -158,6 +161,7 @@ h1 {
 
 .btn-publier i {
     color: #f2e80e!important;
+    max-width: 14px;
 }
 .tab-scrollbar {
     position: relative;
@@ -191,9 +195,13 @@ h1.titlefiltre{
     display: inline-block!important;
     width: auto!important;
 }
-select{
+.create_sortie select{
     display: inline-block!important;
     width: auto!important;
+}
+select{
+    display: inline-block!important;
+
 }
 
 

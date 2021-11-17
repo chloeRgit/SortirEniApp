@@ -25,21 +25,20 @@ class SortieController extends AbstractController
      /**
      * @Route("/edit_sortie/{id}", name="edit_sortie")
      */
-    public function editSortie(Request $request, Sortie $sortie): Response
+    public function editSortie(Request $request, Sortie $sortie,VilleRepository $villeRepository): Response
     {
-        $formSortie = $this->createForm(CreationSortieType::class, $sortie);
-        $formSortie->handleRequest($request);
-        if ($formSortie->isSubmitted()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-            return $this->render('main/creationsortie.html.twig', [
-                'sortie' => $sortie,
-                'success_ajout' => 'null']);
-        }
-        return $this->render('main/creationsortie.html.twig', [
-            'formSortie' => $formSortie->createView(),
-            'success_ajout' => 'null',
-        ]);
+        $villeRepo = $villeRepository->findAll();
+
+        //$formSortie = $this->createForm(CreationSortieType::class, $sortie);
+       // $formSortie->handleRequest($request);
+        //if ($formSortie->isSubmitted()) {
+       //     $em = $this->getDoctrine()->getManager();
+       //     $em->flush();
+       // }
+        return $this->render('main/modifiersortie.html.twig', [
+            's' => $sortie,
+            'ville'=>$villeRepo,
+          ]);
     }
 
     /**
@@ -206,16 +205,49 @@ class SortieController extends AbstractController
     public function afficherSortie(Sortie $sortie,SortieRepository $sortieRepository, LieuRepository $lieuRepository, SiteRepository $siteRepository, VilleRepository $villeRepository,EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-        //$lieu=
-            //dd($sortie);
-        //$ville=$lieu->$lieuRepository->getVille();
+
 
         return $this->render('main/affichesortie.html.twig', [
             's' => $sortie,
-            //'l' => $lieu,
-            //'v' => $ville,
+         ]);
+    }
+    /**
+     * @Route("/publier/{id}", name="publier_sortie")
+     */
+    public function publierSortie(Sortie $sortie,EntityManagerInterface $em, EtatRepository $repoEtat): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $etatpublier=$repoEtat->findOneBy(['libelle'=>'Ouverte']);
+        $sortie->setEtat($etatpublier);
+        $em->persist($sortie);
+        $em->flush();
 
+        return $this->redirectToRoute('main');
+
+    }
+    /**
+     * @Route("/annuler/{id}", name="annuler_sortie")
+     */
+    public function annulerSortie(Sortie $sortie,EntityManagerInterface $em, EtatRepository $repoEtat, Request $request): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $etatannuler=$repoEtat->findOneBy(['libelle'=>'Annulée']);
+       // dd($request,$etatannuler,$sortie);
+        if (isset($_POST['annulation'])) {
+            //dd($request);
+            if ($request->request->get('motif_annulation') != null){
+                $sortie->setMotifAnnulation($request->request->get('motif_annulation')) ;
+            }
+            $sortie->setEtat($etatannuler);
+            $em->persist($sortie);
+            $em->flush();
+            return $this->redirectToRoute('main');
+        }
+
+        return $this->render('main/annulersortie.html.twig', [
+            's' => $sortie,
         ]);
+
     }
 
 }
