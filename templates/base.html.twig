@@ -45,18 +45,24 @@
 </head>
 
 <body>
-
+<script src="js/script.js"></script>
+<script src="js/sweetalert.js"></script>
 <header>
     <nav class="navbar navbar-light" style="background-color: #d1ecf1;">
         <div class="container">
             <img class="logo" src="{{ asset('images/logo.png') }}">
 
             <h1 style="font-family: 'Dancing Script', cursive; color: #042444; " {{ path('main') }}">Sortir.com</h1>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            {#<button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <span class="navbar-toggler-icon"></span>#}
+            <nav class="navbar" id="navbar-menu">
+            <div class="hamburger-menu">
+                    <div class="line line-1"></div>
+                    <div class="line line-2"></div>
+                    <div class="line line-3"></div>
+                </div>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
@@ -65,8 +71,9 @@
                     <li class="nav-item"><a class="nav-link" href="{{ path('main') }}">Contact</a></li>
                 </ul>
             </div>
+            </nav>
         </div>
-    </nav>
+    </div>
 </header>
 <main>
     <div class="container mt-5 mb-5">
