@@ -1,18 +1,61 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />
-    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
-{% endblock %}
 
 
 {% block body %}
     <h1> Modification de mon profil </h1>
 
-    {{form_start(formProfil)}}
-    <div class="col-4">
-        {{form_widget(formProfil)}}
-        <button type="submit" class="btn btn-outline-success">Valider</button>
+    {% if error != null %}
+        <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+<form name="edit_profil" class="edit_profil" action="{{ path('edit_profil',{id: participant.id}) }}" method="post">
+    <div class="row">
+    <div class="col-lg-3">
+        <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
     </div>
-    {{form_end(formProfil)}}
+    <div class="col-lg-6">
+
+    <div>
+        <label for="pseudo">Pseudo :</label>
+        <input type="text" disabled value="{{ participant.pseudo }}">
+    </div>
+    <div>
+        <label for="prenom">Prénom :</label>
+        <input type="text" disabled value="{{ participant.prenom }}">
+    </div>
+    <div>
+        <label for="nom">Nom :</label>
+        <input type="text" disabled value="{{ participant.nom }}">
+    </div>
+    <div>
+        <label for="telephone">Téléphone :</label>
+        <input type="text" name="tel" value="{{ participant.telephone }}">
+    </div>
+    <div >
+        <label for="email">Email :</label>
+        <input type="email" name="mail" value="{{ participant.email }}">
+    </div>
+    <div class="password">
+        <label for="mdp">Mot de passe :</label>
+        <input type="password" id="motdepasse" name="mdp" value="">
+        <button class="btn-action" id="buttonMDP" type="button" onclick="Afficher('motdepasse',this.id)"><i class="fas fa-eye"></i></button>
+    </div>
+    <div class="password">
+        <label for="mdp_c">Confirmation du mot de passe :</label>
+        <input type="password" id="motdepasseConf" name="mdp_c" value="">
+        <button class="btn-action" type="button" id="buttonMDPC" onclick="Afficher('motdepasseConf', this.id)"><i class="fas fa-eye"></i></button>
+    </div>
+    <div>
+        <label for="site">Site :</label>
+        <input type="text" disabled value="{{ site }}">
+    </div>
+    </div>
+    <div class="button-container">
+        <a class="btn-action" href="{{ path('profil',{id: participant.id}) }}"><i class="fas fa-arrow-circle-left"></i> Retour</a>
+        <button class="btn-action" type="submit" name="action" ><i class="fas fa-check-circle"></i> Valider</button>
+    </div>
+    </div>
+</form>
+    <script src="{{ asset('JS/password_view.js') }}">    </script>
 
 {% endblock %}
