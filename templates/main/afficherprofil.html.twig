@@ -1,16 +1,19 @@
 {% extends 'base.html.twig' %}
-{% block stylesheets %}
-    <link href="{{ asset('css/styles.css') }}" type="text/css" rel="stylesheet" />
-    <!-- Copy CSS from https://getbootstrap.com/docs/5.0/getting-started/introduction/#css -->
-{% endblock %}
 
 {% block body %}
-    <h1>Mon profil</h1>
-    <div class="container row">
-    <div class="col-lg-6">
-        <img src="{{ participant.photo }}">
+    <div class="container row view_profil">
+
+        {% if autorisation == true %}
+            <h1>Mon profil</h1>
+        {% else %}
+        <h1>Profil de {{ participant.prenom }}</h1>
+        {% endif %}
+
+
+    <div class="col-lg-3 photo">
+        <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-3">
         <div class="row-prenom">
             <p>Prénom :</p>
             <p>{{ participant.prenom }}</p>
@@ -32,15 +35,15 @@
             <p>{{ participant.site.getNom }}</p>
         </div>
     </div>
+
+    <div class="row btn">
+            <a class="btn-action" href="{{ path('main') }}"><i class="fas fa-arrow-circle-left"></i> Retour</a>
+        {% if autorisation == true %}
+            <a class="btn-action" href="{{ path('edit_profil', {id: participant.id}) }}" class="btn btn-outline-success"><i class="fas fa-edit"></i> Modifier</a>
+        {% endif %}
+
     </div>
 
-    <div class="row">
-        <div class="btn-container">
-            <a href="{{ path('main') }}">Retour</a>
-        </div>
-        <div class="btn-container">
-            <a href="{{ path('edit_profil', {id: participant.id}) }}" class="btn btn-outline-success">Modifier</a>
-        </div>
     </div>
 
 
