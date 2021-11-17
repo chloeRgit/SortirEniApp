@@ -1,5 +1,4 @@
-$(function () {
-    $('.js-sweetalert button').on('click' {
+$('.js-sweetalert button').on('click', function() {
         if (type === 'error') {
             swal({
                 title: "Error",
@@ -14,6 +13,6 @@ $(function () {
                 type: "succes",
                 confirmButtonText: "OK"
             });
-        });
+        }
     });
 
