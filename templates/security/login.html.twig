@@ -16,10 +16,8 @@
         {% endif %}
 
         {% if app.user %}
-            <div class="mb-3">
-                Vous êtes connecté.e avec le mail : {{ app.user.username }}
-                <br>
-                <br>
+            <div class="mb-3 login" >
+                <p>Vous êtes connecté.e avec le mail : {{ app.user.username }}</p>
                 <button class="btn btn-lg btn-outline-danger">
                     <a href="{{ path('app_logout') }}"> Se déconnecter</a>
                 </button>

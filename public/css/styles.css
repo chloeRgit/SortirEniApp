@@ -239,3 +239,12 @@ input{
     margin-top: 0!important;
     padding: 0!important;
 }
+
+.login .btn-outline-danger a{
+    text-decoration: none;
+    color: black;
+}
+
+.login .btn-outline-danger:hover a{
+    color: white;
+}
