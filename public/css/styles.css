@@ -208,3 +208,34 @@ select{
 input{
     padding: 0 0.5em;
 }
+
+/** login **/
+.login div{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-gap: 1em;
+    margin: 0.5em 0!important;
+}
+
+.login .option div{
+    grid-template-columns: 100%;
+}
+
+.login input[type="checkbox"]{
+    margin-top: 0!important;
+}
+
+.login .button-container{
+    display: flex!important;
+    justify-content: center;
+}
+
+.login .password{
+    grid-template-columns: 40% 50% 7.5%;
+    grid-gap: 1em;
+}
+
+.login .password .btn-action{
+    margin-top: 0!important;
+    padding: 0!important;
+}
