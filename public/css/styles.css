@@ -17,25 +17,17 @@ main {
 footer {
     padding: 30px 0;
     margin-bottom: 0;
+    background-color: #d1ecf1;
 }
 
-h1 {
+h1,
+.h1{
     font-family: 'Dancing Script', cursive;
     text-align: center;
+    color: #042444!important;
+    text-decoration: none;
 }
 
-
-
-#modification_profil label,
-#modification_profil input,
-#modification_profil select{
-    display: block!important;
-    width: auto!important;
-}
-
-#modification_profil .mb-3{
-    margin: 1em 0!important;
-}
 
 .row{
     display: flex;
@@ -187,19 +179,9 @@ h1.titlefiltre{
     margin: 1em 0!important;
 }
 
-.create_sortie select{
-    display: inline-block!important;
-    width: auto!important;
-}
 select{
     display: inline-block!important;
     width: auto!important;
-}
-
-
-.create_sortie input{
-    min-width: 30%!important;;
-    text-align: center;
 }
 
 #duree-sortie{
@@ -348,11 +330,55 @@ input{
 .row.home .col-lg-6{
     margin: 0!important;
 }
-.description_sortie{
-    width: 250px;
-    height: 100px;
-    text-align: left;
+
+/** header **/
+header{
+    background-color: #d1ecf1;
 }
-.clickable-row{
-    cursor:pointer;
+
+header .container {
+    margin: 0 auto!important;
+    display: flex;
+}
+header .container > div {
+    display: flex;
+    justify-content: center;
+    align-self: center!important;
+}
+
+/** menu **/
+.dropdown button:after{
+    display: none;
+}
+
+.dropdown button i{
+    color: #d1ecf1!important;
+}
+
+.dropdown button{
+    background-color: #042444!important;
+    width: 100%!important;
+    height: auto!important;
+    padding: 0.5em 1em!important;
+}
+
+.dropdown:hover .dropdown-menu{
+    display: block;
+    border-color: #042444;
+    background-color: #d1ecf1;
+    padding: 0.5em 0!important;
+}
+
+.dropdown-menu .dropdown-item:hover{
+    background-color: #042444!important;
+    color: #d1ecf1;
+}
+
+.dropdown-menu .utilisateur{
+    padding-bottom: 0.5em;
+    border-bottom: 1px solid #042444;
+}
+
+.dropdown-menu .sorties{
+    padding-top: 0.5em;
 }

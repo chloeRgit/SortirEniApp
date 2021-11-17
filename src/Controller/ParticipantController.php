@@ -64,6 +64,8 @@ class ParticipantController extends AbstractController
             if ($request->request->get('mail') != null){
                 $participant->setEmail($request->request->get('mail'));
             }
+
+
             $em = $this->getDoctrine()->getManager();
             $em->flush();
         }
@@ -71,6 +73,7 @@ class ParticipantController extends AbstractController
             'formProfil' => $formProfil->createView(),
             'success_ajout' => 'null',
             'participant' => $participant,
+            'user' => $participant,
             'autorisation' => $autorisation,
             'error' => $error,
             'site' => $site,
@@ -92,6 +95,7 @@ class ParticipantController extends AbstractController
 
         return $this->render('main/afficherprofil.html.twig',
             [
+                'user' => $participant,
                 'autorisation' => $autorisation,
                 'participant' => $participant
             ]);

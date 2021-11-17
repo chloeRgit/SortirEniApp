@@ -71,7 +71,6 @@ class MainController extends AbstractController
             }
            //activité passée date>date de fin. ouvert/fermé/en cours->Passé
             if(($s->getEtat()->getId()==$etatencours->getId()|| $s->getEtat()->getId()==$etatcloture->getId()||$s->getEtat()->getId()==$etatouvert->getId()) && $dtfinh<$now->format("Y-m-d H:i:s")) {
-
                 $s->setEtat($etatpasse);
                 $em->persist($s);
                 $em->flush();
