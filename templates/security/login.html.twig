@@ -11,7 +11,7 @@
     <div class="offset-3 col-6">
 
         {% if error %}
-            <div class="alert alert-danger js-sweetalert"> Identifiant ou mot de passe
+            <div class="alert alert-danger "> Identifiant ou mot de passe
                 incorrect{# *{{ error.messageKey|trans(error.messageData, 'security') }}*/ #}</div>
         {% endif %}
 
@@ -20,8 +20,8 @@
                 Vous êtes connecté.e avec le mail : {{ app.user.username }}
                 <br>
                 <br>
-                <button class="btn btn-lg btn-outline-danger" onclick="{{ path('app_logout') }}">
-                    Se déconnecter
+                <button class="btn btn-lg btn-outline-danger">
+                    <a href="{{ path('app_logout') }}"> Se déconnecter</a>
                 </button>
             </div>
             <br>
@@ -53,11 +53,22 @@
                 <a class="mb-5" href="#">Mot de passe oublié</a>
                 <br>
                 <br>
-                <button class="btn btn-lg btn-secondary" type="submit">
+                <button class="btn btn-lg btn-secondary js-sweetalert button" type="submit">
                     Connexion
                 </button>
                 <br>
             </div>
         </form>
     </div>
+    <script src="{{ asset ('js/script.js')}}"></script>
+    <script src="{{ asset ('js/sweetalert.js')}}"></script>
+    <script>
+    $(function () {
+        $('.js-sweetalert button').on('click', function () {
+           alert('hello');
+            });
+
+    });
+</script>
 {% endblock %}
+
