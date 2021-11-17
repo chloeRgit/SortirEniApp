@@ -22,17 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
-    /**
-     * @Route("/sortie", name="sortie")
-     */
-    public function index(): Response
-    {
-        return $this->render('sortie/index.html.twig', [
-            'controller_name' => 'SortieController',
-        ]);
-    }
-
-    /**
+     /**
      * @Route("/edit_sortie/{id}", name="edit_sortie")
      */
     public function editSortie(Request $request, Sortie $sortie): Response
@@ -209,6 +199,23 @@ class SortieController extends AbstractController
         $sortie->removeInscription($user);
         $em->flush();
         return $this->redirectToRoute('main');
+    }
+    /**
+     * @Route("/sortie/{id}", name="sortie")
+     */
+    public function afficherSortie(Sortie $sortie,SortieRepository $sortieRepository, LieuRepository $lieuRepository, SiteRepository $siteRepository, VilleRepository $villeRepository,EntityManagerInterface $em): Response
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        //$lieu=
+            //dd($sortie);
+        //$ville=$lieu->$lieuRepository->getVille();
+
+        return $this->render('main/affichesortie.html.twig', [
+            's' => $sortie,
+            //'l' => $lieu,
+            //'v' => $ville,
+
+        ]);
     }
 
 }

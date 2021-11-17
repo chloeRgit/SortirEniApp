@@ -184,11 +184,14 @@ h1.titlefiltre{
     margin: 1em 0!important;
 }
 
-select{
+.create_sortie select{
     display: inline-block!important;
     width: auto!important;
 }
+select{
+    display: inline-block!important;
 
+}
 .create_sortie input{
     min-width: 30%!important;;
     text-align: center;
@@ -196,4 +199,12 @@ select{
 
 #duree-sortie{
     margin-right: 0.5em;
+}
+.description_sortie{
+    width: 250px;
+    height: 100px;
+    text-align: left;
+}
+.clickable-row{
+    cursor:pointer;
 }
