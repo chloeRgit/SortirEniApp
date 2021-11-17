@@ -38,12 +38,12 @@
     <div class="password">
         <label for="mdp">Mot de passe :</label>
         <input type="password" id="motdepasse" name="mdp" value="">
-        <button class="btn-action" type="button" onclick="Afficher('motdepasse')"><i class="fas fa-eye"></i></button>
+        <button class="btn-action" id="buttonMDP" type="button" onclick="Afficher('motdepasse',this.id)"><i class="fas fa-eye"></i></button>
     </div>
     <div class="password">
         <label for="mdp_c">Confirmation du mot de passe :</label>
         <input type="password" id="motdepasseConf" name="mdp_c" value="">
-        <button class="btn-action" type="button" onclick="Afficher('motdepasseConf')"><i class="fas fa-eye"></i></button>
+        <button class="btn-action" type="button" id="buttonMDPC" onclick="Afficher('motdepasseConf', this.id)"><i class="fas fa-eye"></i></button>
     </div>
     <div>
         <label for="site">Site :</label>
@@ -56,19 +56,6 @@
     </div>
     </div>
 </form>
-    <script>
-        function Afficher(id)
-        {
-            var input = document.getElementById(id);
-            if (input.type === "password")
-            {
-                input.type = "text";
-            }
-            else
-            {
-                input.type = "password";
-            }
-        }
-    </script>
+    <script src="{{ asset('JS/password_view.js') }}">    </script>
 
 {% endblock %}
