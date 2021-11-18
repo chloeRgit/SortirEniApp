@@ -5,88 +5,97 @@
     {% set idd=s.lieu.ville.nom %}
 
     <h1> Modification d'une sortie </h1>
-    <form name="modification_sortie" class="modification_sortie" action="{{ path('edit_sortie',{id: s.id}) }}" method="post">
+    <form name="modification_sortie" class="modification_sortie" action="{{ path('edit_sortie',{id: s.id}) }}"
+          method="post">
         <div class="row">
-        <div class="col-lg-6">
-        <div>
-            <label for="titre-sortie">Nom de la sortie :</label>
-            <input type="text" name="titre-sortie" value="{{ s.nom }}">
-        </div>
-        <div>
-            <label for="date-h-sortie">Date et heure de la sortie :</label>
-            <input type="datetime-local" id="date-h-sortie" name="date-h-sortie"  value="{{ s.dateHeureDebut |date("Y-m-d")}}T{{ s.dateHeureDebut |date("H:i")}}">
+            <div class="col-lg-6">
+                <div>
+                    <label for="titre-sortie">Nom de la sortie :</label>
+                    <input type="text" name="titre-sortie" value="{{ s.nom }}">
+                </div>
+                <div>
+                    <label for="date-h-sortie">Date et heure de la sortie :</label>
+                    <input type="datetime-local" id="date-h-sortie" name="date-h-sortie"
+                           value="{{ s.dateHeureDebut |date("Y-m-d") }}T{{ s.dateHeureDebut |date("H:i") }}">
 
-        </div>
-        <div>
-            <label for="date-l-sortie">Date limite de la sortie :</label>
-            <input type="datetime-local" name="date-l-sortie" id="date-l-sortie" value="{{ s.dateLimiteInscription |date("Y-m-d")}}T{{ s.dateLimiteInscription |date("H:i")}}">
+                </div>
+                <div>
+                    <label for="date-l-sortie">Date limite de la sortie :</label>
+                    <input type="datetime-local" name="date-l-sortie" id="date-l-sortie"
+                           value="{{ s.dateLimiteInscription |date("Y-m-d") }}T{{ s.dateLimiteInscription |date("H:i") }}">
 
-        </div>
-        <div>
-            <label for="nbParticipant-sortie">Nombre de places :</label>
-            <input type="number" name="nbParticipant-sortie" value="{{ s.nbInscriptionsMax }}">
-        </div>
-        <div>
-            <label for="duree-sortie">Durée :</label>
-            <p><input type="number" name="duree-sortie" id="duree-sortie" value="{{ s.duree }}"> minutes </p>
-        </div>
-        <div>
-            <label for="desc-sortie">Descriptions et infos :</label>
-            <textarea name="desc-sortie">{{ s.infosSortie }}</textarea>
-        </div>
-        </div>
-        <div class="col-lg-6">
+                </div>
+                <div>
+                    <label for="nbParticipant-sortie">Nombre de places :</label>
+                    <input type="number" name="nbParticipant-sortie" value="{{ s.nbInscriptionsMax }}">
+                </div>
+                <div>
+                    <label for="duree-sortie">Durée :</label>
+                    <p><input type="number" name="duree-sortie" id="duree-sortie" value="{{ s.duree }}"> minutes </p>
+                </div>
+                <div>
+                    <label for="desc-sortie">Descriptions et infos :</label>
+                    <textarea name="desc-sortie">{{ s.infosSortie }}</textarea>
+                </div>
+            </div>
+            <div class="col-lg-6 last">
 
-        <div>
-            <label for="ville-select">Ville:</label>
-            <select id="ville-select" onchange=populateSelect(this.value) class="form-control" name="ville-select">
-                {% for vv in ville %}
-                    {% if (vv.nom == s.lieu.ville.nom) %}
-                        <option selected value="{{ vv.id }}"> {{ vv.nom }}</option>
-                    {% else %}
-                        <option value="{{ vv.id }}"> {{ vv.nom }}</option>
-                    {% endif %}
+                <div>
+                    <label for="ville-select">Ville:</label>
+                    <select id="ville-select" onchange=populateSelect(this.value) class="form-control"
+                            name="ville-select">
+                        {% for vv in ville %}
+                            {% if (vv.nom == s.lieu.ville.nom) %}
+                                <option selected value="{{ vv.id }}"> {{ vv.nom }}</option>
+                            {% else %}
+                                <option value="{{ vv.id }}"> {{ vv.nom }}</option>
+                            {% endif %}
 
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="lieu-select">Lieu:</label>
-            <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select" >
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="lieu-select">Lieu:</label>
+                    <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select">
 
-                {% for l in lieux %}
-                    {% if (l.nom == s.lieu.nom ) %}
-                        <option selected value="{{ l.id }}"> {{ l.nom }}</option>
-                    {% else %}
-                        <option value="{{ l.id }}"> {{ l.nom }}</option>
-                    {% endif %}
+                        {% for l in lieux %}
+                            {% if (l.nom == s.lieu.nom ) %}
+                                <option selected value="{{ l.id }}"> {{ l.nom }}</option>
+                            {% else %}
+                                <option value="{{ l.id }}"> {{ l.nom }}</option>
+                            {% endif %}
 
-                {% endfor %}
-            </select>
-        </div>
-        <div>
-            <label for="rue-lieu-sortie">Rue :</label>
-            <input type="text" name="rue-lieu-sortie" id="rue-lieu-sortie" disabled value="{{ s.lieu.rue }}">
-        </div>
-        <div>
-            <label for="cp-lieu-sortie">Code postal :</label>
-            <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie" disabled value="{{ s.lieu.ville.codePostal }}">
-        </div>
-        <div>
-            <label for="lat-lieu-sortie">Latitude :</label>
-            <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001" disabled id="lat-lieu-sortie" value="{{ s.lieu.latitude }}">
-        </div>
-        <div>
-            <label for="long-lieu-sortie">Longitude :</label>
-            <input type="number" name="long-lieu-sortie" min="-180" max="180" step=".0000001" disabled id="long-lieu-sortie" value="{{ s.lieu.longitude }}">
-        </div>
-        </div>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="rue-lieu-sortie">Rue :</label>
+                    <input type="text" name="rue-lieu-sortie" id="rue-lieu-sortie" disabled value="{{ s.lieu.rue }}">
+                </div>
+                <div>
+                    <label for="cp-lieu-sortie">Code postal :</label>
+                    <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie" disabled
+                           value="{{ s.lieu.ville.codePostal }}">
+                </div>
+                <div>
+                    <label for="lat-lieu-sortie">Latitude :</label>
+                    <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001" disabled
+                           id="lat-lieu-sortie" value="{{ s.lieu.latitude }}">
+                </div>
+                <div>
+                    <label for="long-lieu-sortie">Longitude :</label>
+                    <input type="number" name="long-lieu-sortie" min="-180" max="180" step=".0000001" disabled
+                           id="long-lieu-sortie" value="{{ s.lieu.longitude }}">
+                </div>
+            </div>
 
-        <div class="button-container">
-            <button class=" btn btn-action" type="submit" name="modifier" value="1"><i class="fas fa-save"></i> Enregistrer</button>
-            <a href="{{ path('main')}}" class="btn btn-action"> Annuler</a>
+            <div class="button-container">
+                <button class=" btn btn-action" type="submit" name="modifier" value="1"><i class="fas fa-save"></i>
+                    Enregistrer
+                </button>
+                <a href="{{ path('main') }}" class="btn btn-action"> Annuler</a>
 
-        </div>
+            </div>
         </div>
     </form>
 
@@ -140,9 +149,10 @@
                 var cpSortie = document.getElementById('cp-lieu-sortie');
             })
         }
+
         function dateFinMini(value) {
             //alert(value);
-            document.getElementById("date-l-sortie").setAttribute("max",value);
+            document.getElementById("date-l-sortie").setAttribute("max", value);
         }
     </script>
 {% endblock %}

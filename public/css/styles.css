@@ -68,7 +68,7 @@ h1,
 }
 
 .btn-action{
-    padding: 0.5em 1em!important;
+    padding: 0!important;
     background-color:#d1ecf1 !important;
     text-decoration: none;
     color: #042444!important;
@@ -76,16 +76,20 @@ h1,
     border-color: #042444!important;
 }
 .btn-afficher, .btn-modifier{
-    padding: 0.5em 1em!important;
     background-color:#d1ecf1 !important;
     text-decoration: none;
+}
+table .btn{
+    padding: 0.5em 0.25em !important;
+}
+table .btn a{
+    padding: 0.5em 1em!important;
 }
 .btn-afficher i, .btn-modifier i{
     color: #042444!important;
 }
 
 .btn-afficher:hover,.btn-modifier:hover{
-    padding: 0.5em 1em!important;
     background-color:#042444 !important;
     text-decoration: none;
 
@@ -94,7 +98,6 @@ h1,
     color: #d1ecf1!important;
 }
 .btn-inscrit{
-    padding: 0.5em 1em!important;
     background-color:#b0b084 !important;
     text-decoration: none;
 }
@@ -103,7 +106,6 @@ h1,
     max-width: 14px;
 }
 .btn-inscrit:hover{
-    padding: 0.5em 1em!important;
     background-color: #042444!important;
     text-decoration: none;
 }
@@ -111,7 +113,6 @@ h1,
     color: #b0b084!important;
 }
 .btn-annuler{
-    padding: 0.5em 1em!important;
     background-color:#042444 !important;
     text-decoration: none;
 }
@@ -120,7 +121,6 @@ h1,
     max-width: 14px;
 }
 .btn-annuler:hover{
-    padding: 0.5em 1em!important;
     background-color:#ec1c1c !important;
     text-decoration: none;
 }
@@ -129,7 +129,6 @@ h1,
 }
 
 .btn-desister{
-    padding: 0.5em 1em!important;
     background-color:#b0b084 !important;
     text-decoration: none;
 
@@ -139,7 +138,6 @@ h1,
     max-width: 14px;
 }
 .btn-desister:hover{
-    padding: 0.5em 1em!important;
     background-color:#042444 !important;
     text-decoration: none;
 
@@ -148,7 +146,6 @@ h1,
     color: #ec1c1c!important;
 }
 .btn-publier:hover{
-    padding: 0.5em 1em!important;
     background-color:#f2e80e !important;
     text-decoration: none;
 }
@@ -157,7 +154,6 @@ h1,
 
 }
 .btn-publier{
-    padding: 0.5em 1em!important;
     background-color: #042444!important;
     text-decoration: none;
 }
@@ -185,30 +181,37 @@ h1.titlefiltre{
     margin-bottom: 30px;
 }
 
-.create_sortie .button-container{
+.create_sortie .button-container,
+.modification_sortie .button-container{
     text-align: center;
     margin-top: 2em;
 }
 
-.create_sortie .col-lg-6 div{
+.create_sortie .button-container button,
+.modification_sortie .button-container button,
+.modification_sortie .button-container a{
+    padding: 0.5em 1em!important;
+}
+
+.create_sortie .col-lg-6 div,
+.modification_sortie .col-lg-6 div{
     margin: 1em 0!important;
 }
 
-.create_sortie select{
+.create_sortie select
+.modification_sortie select{
     display: inline-block!important;
     width: auto!important;
 }
-.create_sortie select{
-    display: inline-block!important;
-    width: auto!important;
-}
+
 select{
     display: inline-block!important;
     width: auto!important;
 }
 
 
-.create_sortie input{
+.create_sortie input,
+.modification_sortie input{
     min-width: 30%!important;;
     text-align: center;
 }
@@ -316,25 +319,22 @@ input{
     color: white;
 }
 
-.create_sortie .col-lg-6 div{
+.create_sortie .col-lg-6 div,
+.modification_sortie .col-lg-6 div{
     display: grid;
     grid-template-columns: 35% 60%;
     grid-gap: 1em;
     margin: 0.5em 0!important;
 }
 
-.create_sortie .col-lg-6 div{
-    display: grid;
-    grid-template-columns: 35% 60%;
-    grid-gap: 1em;
-    margin: 0.5em 0!important;
-}
 
-.create_sortie .button-container .btn-action i{
+.create_sortie .button-container .btn-action i,
+.modification_sortie .button-container .btn-action i{
     margin-right: 0.5em;
 }
 
-.create_sortie .row{
+.create_sortie .row,
+.modification_sortie .row{
     margin: 2em 0!important;
 }
 
@@ -478,4 +478,36 @@ table p.inscrit{
     display: grid;
     grid-template-columns: 5% 92%;
     grid-gap: 1em;
+}
+
+.modification_sortie .col-lg-6.last div {
+    grid-template-columns: 25% 70%;
+}
+
+.annulerS{
+    margin: 2em 0!important;
+}
+
+.annuler .button-container{
+    margin-top: 2em;
+}
+
+.annulerS .col-lg-6 div{
+    margin: 1em 0!important;
+}
+
+.annuler div{
+    display: grid;
+    grid-template-columns: 10% 80%;
+    grid-gap: 1em;
+}
+
+.annuler .button-container{
+    display: flex!important;
+    justify-content: center;
+}
+
+.annuler .button-container button,
+.annuler .button-container a{
+    padding: 0.5em 1em !important;
 }
