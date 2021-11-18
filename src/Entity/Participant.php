@@ -86,10 +86,17 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $sortiesInscriptions;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Avatar::class, mappedBy="participant",cascade={"persist"})
+     *
+     */
+    private $avatars;
+
     public function __construct()
     {
         $this->sortiesOrganisees = new ArrayCollection();
         $this->sortiesInscriptions = new ArrayCollection();
+        $this->avatars = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -323,4 +330,68 @@ class Participant implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Avatar[]
+     */
+    public function getAvatars(): Collection
+    {
+        return $this->avatars;
+    }
+
+    public function addAvatar(Avatar $avatar): self
+    {
+        if (!$this->avatars->contains($avatar)) {
+            $this->avatars[] = $avatar;
+            $avatar->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAvatar(Avatar $avatar): self
+    {
+
+        if ($this->avatars->contains($avatar)) {
+           $this->avatars->removeElement($avatar);
+            // set the owning side to null (unless already changed)
+            if ($avatar->getParticipant() === $this) {
+                $avatar->setParticipant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    ////////////////
+/// /**
+//     * @return Collection|Images[]
+//     */
+//    public function getImages(): Collection
+//    {
+//        return $this->images;
+//    }
+//
+//    public function addImage(Images $image): self
+//    {
+//        if (!$this->images->contains($image)) {
+//            $this->images[] = $image;
+//            $image->setAnnonces($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeImage(Images $image): self
+//    {
+//        if ($this->images->contains($image)) {
+//            $this->images->removeElement($image);
+//            // set the owning side to null (unless already changed)
+//            if ($image->getAnnonces() === $this) {
+//                $image->setAnnonces(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
 }
