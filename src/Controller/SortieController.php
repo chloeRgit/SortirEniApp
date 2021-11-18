@@ -87,7 +87,9 @@ class SortieController extends AbstractController
                 $sortie->setDuree($request->request->get('duree-sortie')) ;
             }
 
+
                 $sortie->setInfosSortie($request->request->get('desc-sortie')) ;
+
 
             if ($request->request->get('lieu-select') != null){
                 $idLieu = $request->request->get('lieu-select');
@@ -96,6 +98,7 @@ class SortieController extends AbstractController
                     ]);
                 $sortie->setLieu($lieuChoisi);
             }
+
 
             $sortie->setOrganisateur($organisteur);
             $sortie->setSite($organisteur->getSite());
@@ -112,6 +115,7 @@ class SortieController extends AbstractController
         } else {
 
         }
+
 
         return $this->render('main/creationsortie.html.twig', [
             'sortie' => $sortie,
