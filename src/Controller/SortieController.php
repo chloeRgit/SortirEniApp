@@ -208,7 +208,7 @@ class SortieController extends AbstractController
 
 
         return $this->render('main/creationville.html.twig', [
-            'ville' => $villeRepo,
+            'ville' => $ville,
             'cp' => $cp,
             'formVille' => $formVille->createView(),
         ]);
