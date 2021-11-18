@@ -608,6 +608,9 @@ table p.inscrit{
     .login .password{
         grid-template-columns: 40% 48% 8.5%;
     }
+    .dropdown-menu.admin{
+        left: -10.6em;
+    }
 }
 
 @media only screen and (max-width: 768px){
