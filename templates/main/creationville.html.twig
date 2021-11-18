@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1> Création d'une ville pour un lieu </h1>
+    <form name="creation_ville" class="create_ville" action="{{ path('app_ville') }}" method="post">
+        <div class="row">
+            <div class="col-lg-6">
+                <div>
+                    <label for="ville-lieu-sortie">Rue du lieu :</label>
+                    <input type="text" name="ville-lieu-sortie">
+                </div>
+                <div>
+                    <label for="cp-lieu-sortie">Code postal :</label>
+                    <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie" disabled value="">
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="btn-action" type="submit" name="action" value="1"><i class="fas fa-save"></i> Enregistrer</button>
+        </div>
+        </div>
+    </form>
+{% endblock %}
