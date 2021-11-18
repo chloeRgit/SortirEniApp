@@ -182,7 +182,7 @@ class SortieController extends AbstractController
 
         }
 
-        return $this->render('main/creationlieu.html.twig', [
+        return $this->render('main/creationsortie.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
             'user' => $user,
@@ -224,7 +224,7 @@ class SortieController extends AbstractController
 
         }
 
-        return $this->render('main/creationville.html.twig', [
+        return $this->render('main/creationlieu.html.twig', [
             'ville' => $ville,
             'cp' => $cp,
             'user' => $user,
