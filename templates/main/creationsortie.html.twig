@@ -79,12 +79,15 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+
         function populateSelect(id) {
             //vider le select des lieux
             document.getElementById('lieu-select').innerHTML = "";
             // THE JSON ARRAY.
-            let url = 'http://localhost/symfony/SortirEniApp/public/api/select_lieu';
+            let test1 = "{{ path('api_ville', {id: "2"}) }}";
+            let url = test1.replace('/2','');
             let url2 = url + '/' + id;
+            console.log(url2);
             var ele = document.getElementById('lieu-select');
             console.log(url2);
             let tableau = [];
@@ -110,7 +113,8 @@
             document.getElementById('lat-lieu-sortie').value = "";
             document.getElementById('long-lieu-sortie').value = "";
             // THE JSON ARRAY.
-            let url = 'http://localhost/symfony/SortirEniApp/public/api/info_lieu';
+            let test1 = "{{ path('api_lieux', {id: "2"}) }}";
+            let url = test1.replace('/2','');
             let url2 = url + '/' + id;
             let tableau = [];
             axios.get(url2).then(response => {

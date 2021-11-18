@@ -6,7 +6,10 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Etat;
+use App\Entity\Ville;
+use App\Form\CreationLieuType;
 use App\Form\CreationSortieType;
+use App\Form\CreationVilleType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
@@ -84,9 +87,7 @@ class SortieController extends AbstractController
                 $sortie->setDuree($request->request->get('duree-sortie')) ;
             }
 
-
                 $sortie->setInfosSortie($request->request->get('desc-sortie')) ;
-
 
             if ($request->request->get('lieu-select') != null){
                 $idLieu = $request->request->get('lieu-select');
@@ -95,7 +96,6 @@ class SortieController extends AbstractController
                     ]);
                 $sortie->setLieu($lieuChoisi);
             }
-
 
             $sortie->setOrganisateur($organisteur);
             $sortie->setSite($organisteur->getSite());
@@ -113,7 +113,6 @@ class SortieController extends AbstractController
 
         }
 
-
         return $this->render('main/creationsortie.html.twig', [
             'sortie' => $sortie,
             'organisateur' => $organisteur,
@@ -126,6 +125,109 @@ class SortieController extends AbstractController
             'formSortie' => $formSortie->createView(),
         ]);
     }
+
+    /**
+     * @Route("create_lieu", name="app_lieu")
+     */
+    public function creationLieu(Request $request, LieuRepository $lieuRepository, VilleRepository $villeRepository): Response
+    {
+        $lieu = new Lieu();
+        $rue = null;
+        $cp = null;
+
+        $villeRepo = $villeRepository->findAll();
+
+        $user = $this->getUser();
+
+        $formLieu = $this->createForm(CreationLieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if (isset($_POST['action'])) {
+
+            if ($request->request->get('nom-lieu') != null){
+                $lieu->setNom($request->request->get('nom-lieu')) ;
+            }
+
+            if ($request->request->get('rue-lieu-sortie') != null){
+                $lieu->setRue($request->request->get('rue-lieu-sortie')) ;
+            }
+
+            if ($request->request->get('cp-ville-select') != null){
+                $ville = $villeRepository->findOneBy(['id'=>$request->request->get('cp-ville-select')]);
+                    $lieu->setVille($ville);
+            }
+
+            if ($request->request->get('nom-lieu') != null){
+                $lieu->setNom($request->request->get('nom-lieu')) ;
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            return $this->render('main/creationsortie.html.twig', [
+                'lieu' => $lieu,
+                'ville' => $villeRepo,
+                'user' => $user,
+                'rue' => $rue,
+                'cp' => $cp,
+                'siteOrganisateur' => $user->getSite()->getNom(),
+                'formLieu' => $formLieu->createView(),
+            ]);
+        } else {
+
+        }
+
+        return $this->render('main/creationlieu.html.twig', [
+            'lieu' => $lieu,
+            'ville' => $villeRepo,
+            'user' => $user,
+            'rue' => $rue,
+            'cp' => $cp,
+            'siteOrganisateur' => $user->getSite()->getNom(),
+            'formLieu' => $formLieu->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("create_ville", name="app_ville")
+     */
+    public function creationVille(Request $request, VilleRepository $villeRepository): Response
+    {
+        $ville = new Ville();
+        $cp = null;
+
+        $user = $this->getUser();
+
+        $formVille = $this->createForm(CreationVilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if (isset($_POST['action'])) {
+
+            if ($request->request->get('ville-lieu') != null){
+                $ville->setNom($request->request->get('ville-lieu')) ;
+            }
+            if ($request->request->get('cp-ville-lieu') != null){
+                $ville->setCodePostal($request->request->get('cp-ville-lieu')) ;
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main');
+        } else {
+
+        }
+
+        return $this->render('main/creationville.html.twig', [
+            'ville' => $ville,
+            'cp' => $cp,
+            'user' => $user,
+            'formVille' => $formVille->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/api/select_lieu/{id}", name="api_ville" ,methods={"GET"})

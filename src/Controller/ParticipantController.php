@@ -74,9 +74,9 @@ class ParticipantController extends AbstractController
                         $fichier);
                         $img = new Avatar();
                         $img->setName($fichier);
-                        if ($participant->getAvatars()!=null){
+                        if ($participant->getAvatars()->first()){
                             $avatar1=$participant->getAvatars()->first();
-                            dd($avatar1);
+                            //dd($avatar1);
                             $participant->removeAvatar($avatar1);
                         };
                         $participant->addAvatar($img);}
@@ -115,7 +115,8 @@ class ParticipantController extends AbstractController
             [
                 'user' => $participant,
                 'autorisation' => $autorisation,
-                'participant' => $participant
+                'participant' => $participant,
+                'avatar'=>$participant->getAvatars()->first(),
             ]);
     }
 }
