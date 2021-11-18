@@ -5,52 +5,89 @@
 {% block body %}
     <h1>Register</h1>
 
-    <form name="registration_form" method="post">
+    <form name="registration_form" class="registration" action="{{ path('app_register') }}" method="post">
         <div class="mb-3">
             <label for="registration_form_pseudo" class="form-label required">Pseudo</label>
-            <input type="text" id="registration_form_pseudo" name="registration_form[pseudo]" required="required"
+            <input autofocus type="text" id="registration_form_pseudo" name="registration_form_pseudo" required="required"
                    maxlength="50" class="form-control">
         </div>
         <div class="mb-3">
             <label for="registration_form_nom" class="form-label required">Nom</label>
-            <input type="text" id="registration_form_nom" name="registration_form[nom]" required="required"
+            <input type="text" id="registration_form_nom" name="registration_form_nom" required="required"
                    maxlength="50" class="form-control">
         </div>
         <div class="mb-3">
             <label for="registration_form_prenom" class="form-label required">Prenom</label>
-            <input type="text" id="registration_form_prenom" name="registration_form[prenom]" required="required"
+            <input type="text" id="registration_form_prenom" name="registration_form_prenom" required="required"
                    maxlength="50" class="form-control">
         </div>
         <div class="mb-3">
             <label for="registration_form_email" class="form-label required">Email</label>
-            <input type="text" id="registration_form_email" name="registration_form[email]" required="required"
+            <input type="text" id="registration_form_email" name="registration_form_email" required="required"
                    maxlength="180" class="form-control">
         </div>
         <div class="mb-3">
             <label for="registration_form_telephone" class="form-label">Telephone</label>
-            <input type="text" id="registration_form_telephone" name="registration_form[telephone]" maxlength="15"
+            <input type="text" id="registration_form_telephone" name="registration_form_telephone" maxlength="15"
                    class="form-control">
         </div>
         <div class="mb-3">
             <label for="registration_form_plainPassword" class="form-label required">Password</label>
-            <input type="password" id="registration_form_plainPassword" name="registration_form[plainPassword]"
+            <input type="password" id="registration_form_plainPassword" name="registration_form_Password"
                    required="required" autocomplete="new-password" class="form-control">
         </div>
 
 
         <div class="mb-3">
             <label class="form-label" for="registration_form_site">Site</label>
-            <select id="registration_form_site" name="registration_form[site]" class="form-select">
+            <select id="registration_form_site" name="registration_form_site" class="form-select">
+                <option selected></option>
+                {% for s in sites %}
+                    <option value="{{ s.id }}">{{ s.nom }}</option>
+                {% endfor %}
             </select>
         </div>
 
-        <div class="mb-3">
+        <div class="button-container">
             <div class="form-check">
                 <input type="checkbox" id="registration_form_agreeTerms" name="registration_form[agreeTerms]"
                        required="required" class="form-check-input" value="1">
-                <label class="form-check-label required" for="registration_form_agreeTerms">Agree terms</label>
+                <label class="form-check-label required" for="registration_form_agreeTerms">Accepter les conditions d'utilisations</label>
             </div>
+            <button type="submit" name="action" class="btn btn-action">
+                <a>
+                    <i class="fa-solid fa-user-plus"></i> Créer le nouvel utilisateur
+                </a>
+            </button>
         </div>
-        <button type="submit" class="btn btn-action">Register</button>
+
     </form>
+
+    <script>
+        function populateSelect(id) {
+            //vider le select des lieux
+            document.getElementById('lieu-select').innerHTML = "";
+            // THE JSON ARRAY.
+            let test1 = "{{ path('api_ville', {id: "2"}) }}";
+            let url = test1.replace('/2','');
+            let url2 = url + '/' + id;
+            console.log(url2);
+            var ele = document.getElementById('lieu-select');
+            console.log(url2);
+            let tableau = [];
+            axios.get(url2).then(response => {
+                tableau = response.data;
+                console.log(response.data);
+                var opt = document.createElement('option');
+                opt.value = 0;
+                opt.innerHTML = "Tous";
+                opt.selected = true;
+                ele.appendChild(opt);
+                for (var i = 0; i < tableau.length; i++) {
+                    ele.innerHTML = ele.innerHTML +
+                        '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + '</option>';
+                }
+            })
+        }
+    </script>
 {% endblock %}

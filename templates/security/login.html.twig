@@ -4,11 +4,10 @@
 
 {% block body %}
 
-    <div class="container offset-3 col-6 mt-2 mb-5">
+    <div class="container  col-6 mt-2 mb-5">
         <h1 style="font-family: 'Dancing Script', cursive; color: #042444;"> Se connecter</h1>
     </div>
 
-    <div class="offset-3 col-6">
 
         {% if error %}
             <div class="alert alert-danger"> Identifiant ou mot de passe
@@ -22,10 +21,11 @@
                     <a href="{{ path('app_logout') }}"> Se déconnecter</a>
                 </button>
             </div>
-            <br>
         {% endif %}
 
         <form class="login" method="post">
+            <div class="row">
+                <div class="col-lg-6">
             <div>
                 <label class="mb-1" for="inputEmail">Identifiant</label>
                 <input type="texte" value="{{ last_username }}" name="email" id="inputEmail" class="form-control"
@@ -55,13 +55,16 @@
                     </div>
                 </div>
             </div>
+
             <div class="button-container">
                 <button class="btn-action" type="submit">
                     Connexion
                 </button>
             </div>
+                </div>
+            </div>
         </form>
 
         <script src="{{ asset('JS/password_view.js') }}"></script>
-    </div>
+
 {% endblock %}

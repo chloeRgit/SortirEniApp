@@ -65,14 +65,18 @@
                         <div class="utilisateur">
                             {% if app.user == null %}
                                 <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-                                <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrer un nouvel
-                                    utilisateur</a>
-                            {% elseif app.user %}
+                            {% else %}
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
                                 <a class="dropdown-item" href="{{ path('profil', {id: user.id}) }}">Mon profil</a>
                             {% endif %}
                         </div>
                         <div class="sorties">
+                            {% if app.user != null %}
+                                {% if user.roles[0]  == "ROLE_ADMIN" %}
+                                    <a class="dropdown-item" href="{{ path('app_register') }}">Créer un nouvel
+                                        utilisateur</a>
+                                {% endif %}
+                            {% endif %}
                             <a class="dropdown-item" href="{{ path('main') }}">Afficher les sorties</a>
                             <a class="dropdown-item" href="{{ path('app_sortie') }}">Créer une sortie</a>
                             {% if app.user != null %}

@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="row btn">
+    <div class="row button-container">
             <a class="btn-action" href="{{ path('main') }}"><i class="fas fa-arrow-circle-left"></i> Retour</a>
         {% if autorisation == true %}
             <a class="btn-action" href="{{ path('edit_profil', {id: participant.id}) }}" class="btn btn-outline-success"><i class="fas fa-edit"></i> Modifier</a>

@@ -39,7 +39,7 @@
 
 
                         <div class="row date">
-                            <div class="form-group col-md-6">
+                            <div class="form-group">
                                 <label for="date-deb">Entre:</label>
                                 <input onchange=dateFinMini(this.value)
                                        value={% if(datedeb!=null) %} {{ datedeb }} {% else %} "" {% endif %}type="date"
@@ -47,7 +47,7 @@
                                        placeholder="Apartment, studio, or floor">
                             </div>
 
-                            <div class="form-group col-md-6">
+                            <div class="form-group">
                                 <label for="date-fin">et</label>
                                 <input type="date" class="form-control"
                                        value={% if(datefin!=null) %} {{ datefin }} {% else %} "" {% endif %}

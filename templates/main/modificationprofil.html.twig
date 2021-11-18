@@ -10,7 +10,7 @@
 
 <form name="edit_profil" class="edit_profil" action="{{ path('edit_profil',{id: participant.id}) }}" method="post" enctype="multipart/form-data">
     <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-3 photo">
         {% if avatar==null %}
         <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
 
