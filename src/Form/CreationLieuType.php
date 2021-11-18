@@ -16,7 +16,7 @@ class CreationLieuType extends AbstractType
             ->add('rue')
             ->add('latitude')
             ->add('longitude')
-            ->add('ville')
+            ->add('ville',null,['choice_label'=>'nom'])
         ;
     }
 
