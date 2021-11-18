@@ -28,7 +28,7 @@ class SortieController extends AbstractController
     public function editSortie(Request $request, Sortie $sortie,VilleRepository $villeRepository): Response
     {
         $villeRepo = $villeRepository->findAll();
-
+//dd($request);
         //$formSortie = $this->createForm(CreationSortieType::class, $sortie);
        // $formSortie->handleRequest($request);
         //if ($formSortie->isSubmitted()) {
@@ -60,6 +60,7 @@ class SortieController extends AbstractController
         $formSortie->handleRequest($request);
 
         if (isset($_POST['action'])) {
+
             if ($request->request->get('titre-sortie') != null){
                 $sortie->setNom($request->request->get('titre-sortie')) ;
             }

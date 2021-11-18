@@ -20,12 +20,10 @@
                 <form name="annule_sortie"  action="{{ path('annuler_sortie',{id: s.id}) }}" method="post">
                     <div>
                         <label for="motif_annulation">Motif:</label>
-                        <textarea required name="motif_annulation">
-
-                        </textarea>
+                        <textarea required name="motif_annulation"></textarea>
                     </div>
                     <div>
-                        <button class="btn-action" type="submit" name="annulation" > Enregistrer</button>
+                        <button class=" btn btn-action" type="submit" name="annulation" > Enregistrer</button>
                         <a href="{{ path('main')}}" class="btn btn-action"> Annuler</a>
                     </div>
                 </form>

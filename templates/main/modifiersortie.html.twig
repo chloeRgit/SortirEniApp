@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
+    {% set idd=s.lieu.ville.nom %}
+
     <h1> Modification d'une sortie </h1>
     <form name="modification_sortie" class="modification_sortie" action="{{ path('edit_sortie',{id: s.id}) }}" method="post">
         <div class="row">
@@ -11,15 +14,17 @@
         </div>
         <div>
             <label for="date-h-sortie">Date et heure de la sortie :</label>
-            <input type="datetime-local" onchange=dateFinMini(this.value) id="date-h-sortie" name="date-h-sortie"  value="{{ s.dateHeureDebut |date("d/m/Y H:i:s")}}">
+            <input type="datetime-local" id="date-h-sortie" name="date-h-sortie"  value="{{ s.dateHeureDebut |date("Y-m-d")}}T{{ s.dateHeureDebut |date("H:i")}}">
+
         </div>
         <div>
             <label for="date-l-sortie">Date limite de la sortie :</label>
-            <input type="datetime-local" name="date-l-sortie" id="date-l-sortie" value="{{ s.dateLimiteInscription |date("d/m/Y H:i:s")}}">
+            <input type="datetime-local" name="date-l-sortie" id="date-l-sortie" value="{{ s.dateLimiteInscription |date("Y-m-d")}}T{{ s.dateLimiteInscription |date("H:i")}}">
+
         </div>
         <div>
             <label for="nbParticipant-sortie">Nombre de places :</label>
-            <input type="number" name="nbParticipant-sortie" value="{{ s.nbInscriptionsMax }}">>
+            <input type="number" name="nbParticipant-sortie" value="{{ s.nbInscriptionsMax }}">
         </div>
         <div>
             <label for="duree-sortie">Durée :</label>
@@ -27,9 +32,7 @@
         </div>
         <div>
             <label for="desc-sortie">Descriptions et infos :</label>
-            <textarea name="desc-sortie">
-            {{ s.infosSortie }}
-            </textarea>
+            <textarea name="desc-sortie">{{ s.infosSortie }}</textarea>
         </div>
         </div>
         <div class="col-lg-6">
@@ -72,7 +75,8 @@
         </div>
 
         <div class="button-container">
-            <button class="btn-action" type="submit" name="modifier" value="1"><i class="fas fa-save"></i> Enregistrer</button>
+            <button class=" btn btn-action" type="submit" name="modifier" value="1"><i class="fas fa-save"></i> Enregistrer</button>
+            <a href="{{ path('main')}}" class="btn btn-action"> Annuler</a>
 
         </div>
         </div>
@@ -80,6 +84,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
+
+
         function populateSelect(id) {
             //vider le select des lieux
             document.getElementById('lieu-select').innerHTML = "";
