@@ -172,7 +172,6 @@ class SortieController extends AbstractController
             'user' => $user,
             'rue' => $rue,
             'cp' => $cp,
-            'user' => $user,
             'formLieu' => $formLieu->createView(),
         ]);
     }
@@ -203,7 +202,7 @@ class SortieController extends AbstractController
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main/creationlieu.html.twig');
+            return $this->redirectToRoute('main');
         } else {
 
         }
