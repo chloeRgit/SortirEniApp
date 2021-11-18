@@ -136,7 +136,7 @@
                         &nbsp;
                         <button
                                 class="btn btn-publier">
-                            <a href="{{ path('sortie',{id: s.id}) }}">
+                            <a href="{{ path('publier_sortie',{id: s.id}) }}">
                                 <i class="fa-solid fa-paper-plane"></i></a><!--Publier-->
                         </button>
                     </td>
@@ -157,7 +157,7 @@
                                 </button>
                                 &nbsp;
                                 <button class="btn btn-annuler">
-                                        <a href="{#{{ path('#',{id: s.id}) }}#}">
+                                        <a href="{{ path('annuler_sortie',{id: s.id}) }}">
                                         <i class="fa-solid fa fa-trash"></i></a><!--Annuler-->
                                 </button>
                             </td>
@@ -232,21 +232,11 @@
             </table>
         </div>
     <div class="row">
-    <div class=" col-9">
-        <button class="btn btn-action">
-            <a href="{{ path('app_sortie')}}"></a>
-                Créer une sortie
-        </button>
-
-            </div>
-        </div>
-        <div class="row">
-            </br>
-        </div>
-
-
+    <div class="col-9">
+            <a href="{{ path('app_sortie')}}" class="btn btn-action">  Créer une sortie</a>
     </div>
-
+    </div>
+</div>
     <script>
         function dateFinMini(value) {
             //alert(value);

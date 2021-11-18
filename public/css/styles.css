@@ -29,6 +29,18 @@ h1,
 }
 
 
+
+#modification_profil label,
+#modification_profil input,
+#modification_profil select{
+    display: block!important;
+    width: auto!important;
+}
+
+#modification_profil .mb-3{
+    margin: 1em 0!important;
+}
+
 .row{
     display: flex;
     justify-content: center;
@@ -70,6 +82,7 @@ h1,
 }
 .btn-afficher i, .btn-modifier i{
     color: #042444!important;
+    max-width: 14px;
 }
 
 .btn-afficher:hover,.btn-modifier:hover{
@@ -105,6 +118,7 @@ h1,
 }
 .btn-annuler i {
     color: #ec1c1c!important;
+    max-width: 14px;
 }
 .btn-annuler:hover{
     padding: 0.5em 1em!important;
@@ -141,6 +155,7 @@ h1,
 }
 .btn-publier:hover i {
     color: #042444!important;
+
 }
 .btn-publier{
     padding: 0.5em 1em!important;
@@ -150,6 +165,7 @@ h1,
 
 .btn-publier i {
     color: #f2e80e!important;
+    max-width: 14px;
 }
 .tab-scrollbar {
     position: relative;
@@ -179,9 +195,23 @@ h1.titlefiltre{
     margin: 1em 0!important;
 }
 
+.create_sortie select{
+    display: inline-block!important;
+    width: auto!important;
+}
+.create_sortie select{
+    display: inline-block!important;
+    width: auto!important;
+}
 select{
     display: inline-block!important;
     width: auto!important;
+}
+
+
+.create_sortie input{
+    min-width: 30%!important;;
+    text-align: center;
 }
 
 #duree-sortie{
@@ -381,4 +411,12 @@ header .container > div {
 
 .dropdown-menu .sorties{
     padding-top: 0.5em;
+}
+.description_sortie{
+    width: 250px;
+    height: 100px;
+    text-align: left;
+}
+.clickable-row{
+    cursor:pointer;
 }
