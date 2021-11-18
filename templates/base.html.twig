@@ -50,13 +50,11 @@
 <body>
 <header>
     <div class="container">
-        <div class="col-lg-3">
             <a href="{{ path('main') }}"><img class="logo" src="{{ asset('images/logo.png') }}"></a>
-        </div>
+
         <div class="col-lg-6">
             <a class="h1" href="{{ path('main') }}">Sortir.com</a>
         </div>
-        <div class="col-lg-3">
             <nav class="navbar" id="navbar-menu">
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -67,14 +65,18 @@
                         <div class="utilisateur">
                             {% if app.user == null %}
                                 <a class="dropdown-item" href="{{ path('app_login') }}">Se connecter</a>
-                                <a class="dropdown-item" href="{{ path('app_register') }}">Enregistrer un nouvel
-                                    utilisateur</a>
-                            {% elseif app.user %}
+                            {% else %}
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">Se déconnecter</a>
                                 <a class="dropdown-item" href="{{ path('profil', {id: user.id}) }}">Mon profil</a>
                             {% endif %}
                         </div>
                         <div class="sorties">
+                            {% if app.user != null %}
+                                {% if user.roles[0]  == "ROLE_ADMIN" %}
+                                    <a class="dropdown-item" href="{{ path('app_register') }}">Créer un nouvel
+                                        utilisateur</a>
+                                {% endif %}
+                            {% endif %}
                             <a class="dropdown-item" href="{{ path('main') }}">Afficher les sorties</a>
                             <a class="dropdown-item" href="{{ path('app_sortie') }}">Créer une sortie</a>
                             {% if app.user != null %}
@@ -87,7 +89,6 @@
                     </div>
                 </div>
             </nav>
-        </div>
     </div>
 </header>
 <main>
