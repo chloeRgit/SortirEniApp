@@ -34,7 +34,63 @@ class SortieController extends AbstractController
         $user = $this->getUser();
         $lieux=$lieuRepository->findBy(['ville'=>$sortie->getLieu()->getVille()]);
         //dd($lieux);
+        //$lieuCat = $lieuRepository->findAll();
+        $villeRepo = $villeRepository->findAll();
 
+        $organisteur = $this->getUser();
+
+        $formSortie = $this->createForm(CreationSortieType::class, $sortie);
+        $formSortie->handleRequest($request);
+
+        if (isset($_POST['modifier'])) {
+
+            if ($request->request->get('titre-sortie') != null){
+                $sortie->setNom($request->request->get('titre-sortie')) ;
+            }
+
+            if ($request->request->get('date-h-sortie') != null){
+                $timeSortie = new \DateTime($request->request->get('date-h-sortie'));
+                $timeSortie->format('Y-m-d H:i:s');
+                $sortie->setDateHeureDebut($timeSortie);
+            }
+
+            if ($request->request->get('date-l-sortie') != null){
+                $timeInscription = new \DateTime($request->request->get('date-l-sortie'));
+                $timeInscription->format('Y-m-d H:i:s');
+                $sortie->setDateLimiteInscription($timeInscription) ;
+            }
+
+            if ($request->request->get('nbParticipant-sortie') != null){
+                $sortie->setNbInscriptionsMax($request->request->get('nbParticipant-sortie')) ;
+            }
+
+            if ($request->request->get('duree-sortie') != null){
+                $sortie->setDuree($request->request->get('duree-sortie')) ;
+            }
+
+            $sortie->setInfosSortie($request->request->get('desc-sortie')) ;
+
+            if ($request->request->get('lieu-select') != null){
+                $idLieu = $request->request->get('lieu-select');
+                $lieuChoisi = $lieuRepository->findOneBy([
+                    "id" => $idLieu
+                ]);
+                $sortie->setLieu($lieuChoisi);
+            }
+
+            $sortie->setOrganisateur($organisteur);
+            $sortie->setSite($organisteur->getSite());
+
+           // $etat = $etatRepository->find($_POST['action']);
+           // $sortie->setEtat($etat);
+
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main');
+        }
         return $this->render('main/modifiersortie.html.twig', [
             's' => $sortie,
             'ville'=>$villeRepo,
