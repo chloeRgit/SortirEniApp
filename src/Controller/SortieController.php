@@ -137,7 +137,7 @@ class SortieController extends AbstractController
 
         $villeRepo = $villeRepository->findAll();
 
-        $organisteur = $this->getUser();
+        $user = $this->getUser();
 
         $formLieu = $this->createForm(CreationLieuType::class, $lieu);
         $formLieu->handleRequest($request);
@@ -169,7 +169,7 @@ class SortieController extends AbstractController
         return $this->render('main/creationlieu.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
-            'organisateur' => $organisteur,
+            'user' => $user,
             'rue' => $rue,
             'cp' => $cp,
             'formLieu' => $formLieu->createView(),
@@ -184,7 +184,7 @@ class SortieController extends AbstractController
         $ville = new Ville();
         $cp = null;
 
-        $organisteur = $this->getUser();
+        $user = $this->getUser();
 
         $formVille = $this->createForm(CreationVilleType::class, $ville);
         $formVille->handleRequest($request);
@@ -210,7 +210,7 @@ class SortieController extends AbstractController
         return $this->render('main/creationville.html.twig', [
             'ville' => $ville,
             'cp' => $cp,
-            'organisateur' => $organisteur,
+            'user' => $user,
             'formVille' => $formVille->createView(),
         ]);
     }
