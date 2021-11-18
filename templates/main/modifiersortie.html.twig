@@ -53,7 +53,15 @@
         <div>
             <label for="lieu-select">Lieu:</label>
             <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select" >
-                <option selected > {{ s.lieu.nom }}</option>
+
+                {% for l in lieux %}
+                    {% if (l.nom == s.lieu.nom ) %}
+                        <option selected value="{{ l.id }}"> {{ l.nom }}</option>
+                    {% else %}
+                        <option value="{{ l.id }}"> {{ l.nom }}</option>
+                    {% endif %}
+
+                {% endfor %}
             </select>
         </div>
         <div>

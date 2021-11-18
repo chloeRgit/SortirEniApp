@@ -25,19 +25,18 @@ class SortieController extends AbstractController
      /**
      * @Route("/edit_sortie/{id}", name="edit_sortie")
      */
-    public function editSortie(Request $request, Sortie $sortie,VilleRepository $villeRepository): Response
+    public function editSortie(Request $request, Sortie $sortie,VilleRepository $villeRepository,LieuRepository $lieuRepository): Response
     {
         $villeRepo = $villeRepository->findAll();
-//dd($request);
-        //$formSortie = $this->createForm(CreationSortieType::class, $sortie);
-       // $formSortie->handleRequest($request);
-        //if ($formSortie->isSubmitted()) {
-       //     $em = $this->getDoctrine()->getManager();
-       //     $em->flush();
-       // }
+        $user = $this->getUser();
+        $lieux=$lieuRepository->findBy(['ville'=>$sortie->getLieu()->getVille()]);
+        //dd($lieux);
+
         return $this->render('main/modifiersortie.html.twig', [
             's' => $sortie,
             'ville'=>$villeRepo,
+            'user'=>$user,
+            'lieux'=>$lieux,
           ]);
     }
 
@@ -170,11 +169,6 @@ class SortieController extends AbstractController
         $tabLieu[2] = $lieu->getLatitude();
         $tabLieu[3] = $lieu->getLongitude();
 
-        //dd($tabLieu);
-
-        //$rue = $lieu->getRue();
-        //$cp = $lieu->getVille()->getCodePostal();
-
         return $this->json($tabLieu);
     }
     /**
@@ -207,10 +201,11 @@ class SortieController extends AbstractController
     public function afficherSortie(Sortie $sortie,SortieRepository $sortieRepository, LieuRepository $lieuRepository, SiteRepository $siteRepository, VilleRepository $villeRepository,EntityManagerInterface $em): Response
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-
+        $user = $this->getUser();
 
         return $this->render('main/affichesortie.html.twig', [
             's' => $sortie,
+            'user'=>$user,
          ]);
     }
     /**
@@ -234,7 +229,7 @@ class SortieController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $etatannuler=$repoEtat->findOneBy(['libelle'=>'Annulée']);
-       // dd($request,$etatannuler,$sortie);
+        $user = $this->getUser();
         if (isset($_POST['annulation'])) {
             //dd($request);
             if ($request->request->get('motif_annulation') != null){
@@ -248,6 +243,7 @@ class SortieController extends AbstractController
 
         return $this->render('main/annulersortie.html.twig', [
             's' => $sortie,
+            'user'=>$user,
         ]);
 
     }

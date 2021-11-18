@@ -11,7 +11,8 @@
         </div>
         <div>
             <label for="date-h-sortie">Date et heure de la sortie :</label>
-            <input type="datetime-local" onchange=dateFinMini(this.value) id="date-h-sortie" name="date-h-sortie">
+            <input type="datetime-local" onchange=dateFinMini(this.value) id="date-h-sortie" min="{{ "now"|date("Y-m-d") }}T{{ "now"|date("H:i") }}" name="date-h-sortie">
+
         </div>
         <div>
             <label for="date-l-sortie">Date limite de la sortie :</label>
