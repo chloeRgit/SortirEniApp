@@ -133,7 +133,7 @@ class SortieController extends AbstractController
     /**
      * @Route("create_lieu", name="app_lieu")
      */
-    public function creationLieu(Request $request, LieuRepository $lieuRepository, VilleRepository $villeRepository): Response
+    public function creationLieu(Request $request, VilleRepository $villeRepository): Response
     {
         $lieu = new Lieu();
         $rue = null;
@@ -182,6 +182,7 @@ class SortieController extends AbstractController
 
         }
 
+
         return $this->render('main/creationlieu.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
@@ -223,6 +224,7 @@ class SortieController extends AbstractController
         } else {
 
         }
+
 
         return $this->render('main/creationville.html.twig', [
             'ville' => $ville,
