@@ -138,6 +138,8 @@ class SortieController extends AbstractController
         $lieu = new Lieu();
         $rue = null;
         $cp = null;
+        $latitude = null;
+        $longitude = null;
 
         $villeRepo = $villeRepository->findAll();
 
@@ -161,8 +163,12 @@ class SortieController extends AbstractController
                     $lieu->setVille($ville);
             }
 
-            if ($request->request->get('nom-lieu') != null){
-                $lieu->setNom($request->request->get('nom-lieu')) ;
+            if ($request->request->get('lat-lieu-sortie') != null){
+                $lieu->setLatitude($request->request->get('lat-lieu-sortie')) ;
+            }
+
+            if ($request->request->get('long-lieu-sortie') != null){
+                $lieu->setLongitude($request->request->get('long-lieu-sortie')) ;
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -175,6 +181,8 @@ class SortieController extends AbstractController
                 'user' => $user,
                 'rue' => $rue,
                 'cp' => $cp,
+                'latitude' => $latitude,
+                'longitude' => $longitude,
                 'siteOrganisateur' => $user->getSite()->getNom(),
                 'formLieu' => $formLieu->createView(),
             ]);
@@ -188,6 +196,8 @@ class SortieController extends AbstractController
             'user' => $user,
             'rue' => $rue,
             'cp' => $cp,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
             'siteOrganisateur' => $user->getSite()->getNom(),
             'formLieu' => $formLieu->createView(),
         ]);
@@ -219,15 +229,22 @@ class SortieController extends AbstractController
             $entityManager->persist($ville);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main');
+            return $this->render('main/creationlieu.html.twig', [
+                'ville' => $ville,
+                'cp' => $cp,
+                'user' => $user,
+                'siteOrganisateur' => $user->getSite()->getNom(),
+                'formVille' => $formVille->createView(),
+            ]);
         } else {
 
         }
 
-        return $this->render('main/creationlieu.html.twig', [
+        return $this->render('main/creationville.html.twig', [
             'ville' => $ville,
             'cp' => $cp,
             'user' => $user,
+            'siteOrganisateur' => $user->getSite()->getNom(),
             'formVille' => $formVille->createView(),
         ]);
     }
