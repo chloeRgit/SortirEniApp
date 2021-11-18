@@ -155,7 +155,8 @@ class SortieController extends AbstractController
             }
 
             if ($request->request->get('cp-lieu-sortie') != null){
-                $lieu->getVille($request->request->get('cp-lieu-sortie')) ;
+                $lieu->setVille($villeRepo);
+                $lieu->setCodePostal($villeRepo->getCodePostal());
             }
 
             $entityManager = $this->getDoctrine()->getManager();
