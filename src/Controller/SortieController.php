@@ -6,7 +6,10 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Etat;
+use App\Entity\Ville;
+use App\Form\CreationLieuType;
 use App\Form\CreationSortieType;
+use App\Form\CreationVilleType;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\ParticipantRepository;
@@ -126,6 +129,91 @@ class SortieController extends AbstractController
             'formSortie' => $formSortie->createView(),
         ]);
     }
+
+    /**
+     * @Route("create_lieu", name="app_lieu")
+     */
+    public function creationLieu(Request $request, VilleRepository $villeRepository): Response
+    {
+        $lieu = new Lieu();
+        $rue = null;
+        $cp = null;
+
+        $villeRepo = $villeRepository->findAll();
+
+        $formLieu = $this->createForm(CreationLieuType::class, $lieu);
+        $formLieu->handleRequest($request);
+
+        if (isset($_POST['action'])) {
+
+            if ($request->request->get('nom-lieu') != null){
+                $lieu->setNom($request->request->get('nom-lieu')) ;
+            }
+
+            if ($request->request->get('rue-lieu-sortie') != null){
+                $lieu->setRue($request->request->get('rue-lieu-sortie')) ;
+            }
+
+            if ($request->request->get('cp-lieu-sortie') != null){
+                $lieu->getVille($request->request->get('cp-lieu-sortie')) ;
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main');
+        } else {
+
+        }
+
+
+        return $this->render('main/creationlieu.html.twig', [
+            'lieu' => $lieu,
+            'ville' => $villeRepo,
+            'rue' => $rue,
+            'cp' => $cp,
+            'formLieu' => $formLieu->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("create_ville", name="app_ville")
+     */
+    public function creationVille(Request $request, VilleRepository $villeRepository): Response
+    {
+        $ville = new Ville();
+        $cp = null;
+
+        $formVille = $this->createForm(CreationVilleType::class, $ville);
+        $formVille->handleRequest($request);
+
+        if (isset($_POST['action'])) {
+
+            if ($request->request->get('ville-lieu') != null){
+                $ville->setNom($request->request->get('ville-lieu')) ;
+            }
+            if ($request->request->get('cp-ville-lieu') != null){
+                $ville->setCodePostal($request->request->get('cp-ville-lieu')) ;
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ville);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main');
+        } else {
+
+        }
+
+
+        return $this->render('main/creationville.html.twig', [
+            'ville' => $villeRepo,
+            'cp' => $cp,
+            'formVille' => $formVille->createView(),
+        ]);
+    }
+
 
     /**
      * @Route("/api/select_lieu/{id}", name="api_ville" ,methods={"GET"})
