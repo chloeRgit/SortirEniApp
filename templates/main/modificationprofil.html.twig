@@ -8,10 +8,27 @@
         <div class="alert alert-danger">{{ error }}</div>
     {% endif %}
 
-<form name="edit_profil" class="edit_profil" action="{{ path('edit_profil',{id: participant.id}) }}" method="post">
+<form name="edit_profil" class="edit_profil" action="{{ path('edit_profil',{id: participant.id}) }}" method="post" enctype="multipart/form-data">
     <div class="row">
     <div class="col-lg-3">
+        {% if avatar==null %}
         <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
+
+        {% else %}
+            <img class="picture_profil" src="{{ asset('uploads/'~avatar.name) }}" alt="" width="150">
+        {% endif %}
+
+        <div>
+
+
+            <a  class="btn-action" id="changepicture"><i class="fas fa-image"></i> Changer de photo</a>
+
+
+            <input type="file" name="fileToUpload" id="fileToUpload" class="choosepicture">
+
+
+            <!--<input type="submit" value="Upload Image" name="submit">-->
+        </div>
     </div>
     <div class="col-lg-6">
 
@@ -57,6 +74,18 @@
     </div>
     </div>
 </form>
-    <script src="{{ asset('JS/password_view.js') }}">    </script>
+    <script src="{{ asset('JS/password_view.js') }}">  </script>
+    <script>
+        document.getElementById("changepicture").addEventListener("click", function toffi(){
+           // alert('ici');
+            var sw = document.getElementById("fileToUpload");
+                sw.style.display = "block";
+
+        });
+       // function showInput(){
+       //     var ele =document.getElementById("fileToUpload")
+      //      ele.style.display = "block";
+      //  }
+    </script>
 
 {% endblock %}

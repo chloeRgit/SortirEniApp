@@ -11,7 +11,12 @@
 
 
     <div class="col-lg-3 photo">
-        <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
+        {% if avatar==null %}
+            <img class="picture_profil" src="{{ asset('images/avatar.png') }}">
+
+        {% else %}
+            <img class="picture_profil" src="{{ asset('uploads/'~avatar.name) }}" alt="" width="150">
+        {% endif %}
     </div>
     <div class="col-lg-3">
         <div class="row-prenom">

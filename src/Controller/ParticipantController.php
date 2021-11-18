@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Avatar;
 use App\Entity\Participant;
 use App\Form\ModificationProfilType;
 use App\Repository\ParticipantRepository;
@@ -64,11 +65,27 @@ class ParticipantController extends AbstractController
             if ($request->request->get('mail') != null){
                 $participant->setEmail($request->request->get('mail'));
             }
+            if ($request->files->get('fileToUpload') != null){
+                $avatar =$request->files->get('fileToUpload');
 
+                    $fichier = md5(uniqid()).'.'.$avatar->guessExtension();
+                    $avatar->move(
+                        $this->getParameter('avatars_directory'),
+                        $fichier);
+                        $img = new Avatar();
+                        $img->setName($fichier);
+                        if ($participant->getAvatars()->first()){
+                            $avatar1=$participant->getAvatars()->first();
+                            //dd($avatar1);
+                            $participant->removeAvatar($avatar1);
+                        };
+                        $participant->addAvatar($img);}
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
         }
+
         return $this->render('main/modificationprofil.html.twig', [
             'formProfil' => $formProfil->createView(),
             'success_ajout' => 'null',
@@ -77,6 +94,7 @@ class ParticipantController extends AbstractController
             'autorisation' => $autorisation,
             'error' => $error,
             'site' => $site,
+            'avatar'=>$participant->getAvatars()->first(),
         ]);
     }
 
@@ -97,7 +115,8 @@ class ParticipantController extends AbstractController
             [
                 'user' => $participant,
                 'autorisation' => $autorisation,
-                'participant' => $participant
+                'participant' => $participant,
+                'avatar'=>$participant->getAvatars()->first(),
             ]);
     }
 }
