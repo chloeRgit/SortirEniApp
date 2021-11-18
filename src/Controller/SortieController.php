@@ -165,17 +165,26 @@ class SortieController extends AbstractController
             $entityManager->persist($lieu);
             $entityManager->flush();
 
-            return $this->redirectToRoute('main');
+            return $this->render('main/creationsortie.html.twig', [
+                'lieu' => $lieu,
+                'ville' => $villeRepo,
+                'user' => $user,
+                'rue' => $rue,
+                'cp' => $cp,
+                'siteOrganisateur' => $user->getSite()->getNom(),
+                'formLieu' => $formLieu->createView(),
+            ]);
         } else {
 
         }
 
-        return $this->render('main/creationsortie.html.twig', [
+        return $this->render('main/creationlieu.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
             'user' => $user,
             'rue' => $rue,
             'cp' => $cp,
+            'siteOrganisateur' => $user->getSite()->getNom(),
             'formLieu' => $formLieu->createView(),
         ]);
     }
