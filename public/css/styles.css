@@ -82,7 +82,6 @@ h1,
 }
 .btn-afficher i, .btn-modifier i{
     color: #042444!important;
-    max-width: 14px;
 }
 
 .btn-afficher:hover,.btn-modifier:hover{
@@ -239,10 +238,20 @@ select{
     margin: 0.5em 0!important;
 }
 
-.edit_profil .button-container{
+.edit_profil .button-container,
+.row.home.button-container{
     display: flex;
-    justify-content: center;
+    justify-content: center!important;
     margin-top: 2.5em;
+}
+
+button{
+    width: auto!important;
+}
+
+button a{
+    text-decoration: none;
+    color: #042444;
 }
 
 .edit_profil .button-container a{
@@ -337,7 +346,7 @@ input{
 }
 
 .row.date .form-group:last-child{
-    grid-template-columns: 10% 80%;
+    grid-template-columns: 10% 84%;
 }
 
 .row.date .form-group label{
@@ -352,8 +361,6 @@ input{
     display: flex;
     justify-content: space-between!important;
     flex-direction: row!important;
-    max-width: 80%!important;
-    margin: auto;
     margin-bottom: 2em;
 }
 
@@ -369,6 +376,7 @@ header{
 header .container {
     margin: 0 auto!important;
     display: flex;
+    justify-content: space-between;
 }
 header .container > div {
     display: flex;
@@ -419,4 +427,55 @@ header .container > div {
 }
 .clickable-row{
     cursor:pointer;
+}
+
+/** table **/
+.table-wrapper-scroll-y table tr{
+    display: grid;
+    grid-template-columns: 20% 15% 11% 12% 8% 8% 12% 14%;
+}
+
+
+.table-wrapper-scroll-y table .btn-afficher,
+.table-wrapper-scroll-y table .btn-modifier{
+    border: 1px solid #042444;
+}
+
+.table-wrapper-scroll-y{
+    scrollbar-color: #d1ecf1 #042444;
+}
+
+.table-wrapper-scroll-y .table {
+    --bs-table-bg: transparent;
+    --bs-table-accent-bg: transparent;
+    --bs-table-striped-color: #212529;
+    --bs-table-striped-bg: #e8f9fc!important;
+    --bs-table-active-color: #212529;
+    --bs-table-active-bg: #e8f9fc!important;
+    --bs-table-hover-color: #212529;
+    --bs-table-hover-bg: #e8f9fc!important;
+    color: #212529;
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-color: #042444!important;;
+    border-style: solid;
+    border-width: 0;
+}
+
+table p.inscrit{
+    margin: 0;
+}
+
+.table-wrapper-scroll-y table td,
+.table-wrapper-scroll-y table th{
+    display: flex;
+    justify-content: center;
+    align-items: center!important;
+}
+
+.form-group.site-select{
+    display: grid;
+    grid-template-columns: 5% 92%;
+    grid-gap: 1em;
 }

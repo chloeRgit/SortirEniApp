@@ -2,7 +2,7 @@
 
 
 {% block body %}
-    <div class="row home container">
+    <div class="row home">
         <div class="col-lg-6">
             <h1 class="titlefiltre">Filtrer les sorties</h1>
         </div>
@@ -12,11 +12,12 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-9 blockfiltre">
+        <div class="col-12 blockfiltre">
 
             <form action="{{ path('recherche') }}" method="post">
                 <div class="row">
-                    <div class="form-group col-md-5">
+                    <div class="col-md-5">
+                        <div class="form-group site-select">
                         <label for="site-select">Site:</label>
                         <select id="site-select" class="form-control" name="site-select">
                             <option selected>Tous</option>
@@ -29,6 +30,7 @@
 
                             {% endfor %}
                         </select>
+                        </div>
                         <div class="form-group">
                             <label for="name-filter">Le nom de la sortie contient:</label>
                             <input type="text" class="form-control" id="name-filter" name="name-filter"
@@ -54,7 +56,7 @@
                         </div>
 
                     </div>
-                    <div class="form-group col-md-5">
+                    <div class="form-group check-group col-md-5">
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="1" id="organisateur-filter"
                                    name="organisateur-filter" {% if(organisateurfilter!=null) %} checked {% endif %}>
@@ -101,7 +103,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="table-wrapper-scroll-y tab-scrollbar  col-9 blocktableau">
+    <div class="table-wrapper-scroll-y tab-scrollbar  col-12 blocktableau">
     <table class="table  table-striped mb-0">
         <thead>
         <tr>
@@ -187,7 +189,7 @@
                             <td>{{ s.dateLimiteInscription |date("d/m/Y") }}</td>
                             <td>{{ s.inscription|length }} / {{ s.nbInscriptionsMax }}  </td>
                             <td>{{ s.etat.libelle }}</td>
-                            <td>{% if inscrit %} x {% endif %}</td>
+                            <td>{% if inscrit %} <p class="inscrit"><i class="fas fa-user-check"></i></p> {% endif %}</td>
                             <td>{{ s.organisateur.nom }}</td>
                             <td>
                                 <button
@@ -217,7 +219,7 @@
                             <td>{{ s.dateLimiteInscription |date("d/m/Y") }}</td>
                             <td>{{ s.inscription|length }} / {{ s.nbInscriptionsMax }}  </td>
                             <td>{{ s.etat.libelle }}</td>
-                            <td>{% if inscrit %} x {% endif %}</td>
+                            <td>{% if inscrit %} <p class="inscrit"><i class="fas fa-user-check"></i></p> {% endif %}</td>
                             <td>{{ s.organisateur.nom }}</td>
                             <td> <button
                                     class="btn btn-afficher">
@@ -231,10 +233,10 @@
                 </tbody>
             </table>
         </div>
-    <div class="row">
-    <div class="col-9">
-            <a href="{{ path('app_sortie')}}" class="btn btn-action">  Créer une sortie</a>
-    </div>
+    <div class="row home button-container">
+        <button class="btn btn-action">
+            <a href="{{ path('app_sortie')}}" >  Créer une sortie</a>
+        </button>
     </div>
 </div>
     <script>
