@@ -87,9 +87,7 @@ class SortieController extends AbstractController
                 $sortie->setDuree($request->request->get('duree-sortie')) ;
             }
 
-
                 $sortie->setInfosSortie($request->request->get('desc-sortie')) ;
-
 
             if ($request->request->get('lieu-select') != null){
                 $idLieu = $request->request->get('lieu-select');
@@ -98,7 +96,6 @@ class SortieController extends AbstractController
                     ]);
                 $sortie->setLieu($lieuChoisi);
             }
-
 
             $sortie->setOrganisateur($organisteur);
             $sortie->setSite($organisteur->getSite());
@@ -115,7 +112,6 @@ class SortieController extends AbstractController
         } else {
 
         }
-
 
         return $this->render('main/creationsortie.html.twig', [
             'sortie' => $sortie,
@@ -140,6 +136,8 @@ class SortieController extends AbstractController
         $cp = null;
 
         $villeRepo = $villeRepository->findAll();
+
+        $organisteur = $this->getUser();
 
         $formLieu = $this->createForm(CreationLieuType::class, $lieu);
         $formLieu->handleRequest($request);
@@ -171,6 +169,7 @@ class SortieController extends AbstractController
         return $this->render('main/creationlieu.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
+            'organisateur' => $organisteur,
             'rue' => $rue,
             'cp' => $cp,
             'formLieu' => $formLieu->createView(),
@@ -184,6 +183,8 @@ class SortieController extends AbstractController
     {
         $ville = new Ville();
         $cp = null;
+
+        $organisteur = $this->getUser();
 
         $formVille = $this->createForm(CreationVilleType::class, $ville);
         $formVille->handleRequest($request);
@@ -209,6 +210,7 @@ class SortieController extends AbstractController
         return $this->render('main/creationville.html.twig', [
             'ville' => $ville,
             'cp' => $cp,
+            'organisateur' => $organisteur,
             'formVille' => $formVille->createView(),
         ]);
     }
