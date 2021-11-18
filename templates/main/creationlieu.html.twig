@@ -14,20 +14,16 @@
                     <input type="text" name="rue-lieu-sortie">
                 </div>
                 <div>
-                    <label for="cp-lieu-sortie">Code postal :</label>
-                    <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie">
-                </div>
-                <div>
-                    <label for="ville-select">Ville du lieu :</label>
-                    <select id="ville-select" onchange=populateSelect(this.value) class="form-control" name="ville-select">
-                        <option selected>Tous</option>
+                    <label for="cp-ville-select">Code postal :</label>
+                    <select id="cp-ville-select" onchange=showInfo(this.value) class="form-control" name="cp-ville-select">
                         {% for vv in ville %}
-                            <option value="{{ vv.id }}"> {{ vv.nom }}</option>
-                        {% endfor %}</select>
+                            <option value="{{ vv.id }}"> {{ vv.codePostal }} {{ vv.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                         <div>
                             <a href="{{ path('app_ville')}}" class="btn btn-action">  Créer une ville</a>
                         </div>
-                </div>
                 <div>
                     <label for="lat-lieu-sortie">Latitude :</label>
                     <input type="number" name="lat-lieu-sortie" min="-90" max="90" step=".0000001">
@@ -65,7 +61,7 @@
                 ele.appendChild(opt);
                 for (var i = 0; i < tableau.length; i++) {
                     ele.innerHTML = ele.innerHTML +
-                        '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + '</option>';
+                        '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + tableau[i]["cp"] +'</option>';
                 }
             })
         }

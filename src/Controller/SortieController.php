@@ -152,9 +152,13 @@ class SortieController extends AbstractController
                 $lieu->setRue($request->request->get('rue-lieu-sortie')) ;
             }
 
-            if ($request->request->get('cp-lieu-sortie') != null){
-                $lieu->setVille($villeRepo);
-                $lieu->setCodePostal($villeRepo->getCodePostal());
+            if ($request->request->get('cp-ville-select') != null){
+                $ville = $villeRepository->findOneBy(['id'=>$request->request->get('cp-ville-select')]);
+                    $lieu->setVille($ville);
+            }
+
+            if ($request->request->get('nom-lieu') != null){
+                $lieu->setNom($request->request->get('nom-lieu')) ;
             }
 
             $entityManager = $this->getDoctrine()->getManager();
@@ -166,7 +170,7 @@ class SortieController extends AbstractController
 
         }
 
-        return $this->render('main/creationlieu.html.twig', [
+        return $this->render('main/creationsortie.html.twig', [
             'lieu' => $lieu,
             'ville' => $villeRepo,
             'user' => $user,
@@ -207,7 +211,7 @@ class SortieController extends AbstractController
 
         }
 
-        return $this->render('main/creationville.html.twig', [
+        return $this->render('main/creationlieu.html.twig', [
             'ville' => $ville,
             'cp' => $cp,
             'user' => $user,
