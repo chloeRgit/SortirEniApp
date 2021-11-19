@@ -47,12 +47,14 @@
                 {% endfor %}
             </select>
         </div>
-        <div>
+        <div class="lieu">
             <label for="lieu-select">Lieu:</label>
             <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select">
             </select>
+            <div>
+                <a href="{{ path('app_lieu')}}" class="btn btn-action"><i class="fas fa-plus-circle"></i></a>
+            </div>
         </div>
-            <a href="{{ path('app_lieu')}}" class="btn btn-action">  Créer un lieu</a>
         <div>
             <label for="rue-lieu-sortie">Rue :</label>
             <input type="text" name="rue-lieu-sortie" id="rue-lieu-sortie" disabled value="">

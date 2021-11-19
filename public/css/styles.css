@@ -571,12 +571,27 @@ table p.inscrit{
     justify-content: center!important;
 }
 
+.btn-action{
+    width: auto!important;
+    border: 1px solid;
+    margin: 0 0.5em;
+}
+
 .create_lieu .ville{
-    grid-template-columns: 20% 52.5% 25%!important;
+    grid-template-columns:20% 69% 10%!important;
 }
 
 .create_lieu .ville div{
     grid-template-columns: 100%!important;
+}
+
+.create_sortie .lieu{
+    grid-template-columns:35% 48.5% 10%!important;
+}
+
+.create_sortie .lieu div{
+    grid-template-columns: 100%!important;
+    margin: 0!important;
 }
 
 @media only screen and (max-width: 992px) {
@@ -588,7 +603,11 @@ table p.inscrit{
     }
 
     .create_lieu .ville{
-        grid-template-columns: 30% 46% 25%!important;
+        grid-template-columns: 25% 54% 15%!important;
+    }
+
+    .create_sortie .lieu{
+        grid-template-columns: 35% 43% 15%!important;
     }
 
     .create_lieu .ville div{
@@ -684,7 +703,11 @@ table p.inscrit{
     }
 
     .create_lieu .ville{
-        grid-template-columns: 30% 44% 35%!important;
+        grid-template-columns: 30% 54% 25%!important;
+    }
+
+    .create_sortie .lieu{
+        grid-template-columns: 35% 39% 25%!important;
     }
 
     .col-lg-3.photo{
@@ -721,11 +744,15 @@ table p.inscrit{
     }
 
     .create_lieu .ville{
-        grid-template-columns: 25% 42% 25%!important;
+        grid-template-columns: 25% 54% 15%!important;
     }
 
     .create_lieu .ville div{
         grid-template-columns: 100%!important;
+    }
+
+    .create_sortie .lieu{
+        grid-template-columns: 35% 43% 15%!important;
     }
     .table-wrapper-scroll-y table tr th:not(.table-wrapper-scroll-y table tr th:first-child,
 .table-wrapper-scroll-y table tr th:last-child),
