@@ -251,15 +251,17 @@ class SortieController extends AbstractController
      */
     public function selectLieu(LieuRepository $lieuRepo, VilleRepository $villeRepository, $id): Response
     {
+        // Je récupère un table de lieu qui correspond à la ville
         $ville = $villeRepository->findOneBy(
             [
                 "id" => $id
             ]
         );
 
-
+        // Je fais un select dans la BDD
         $lieux = $lieuRepo->LieuFiltre($ville);
 
+        // Je récupère uniquement les données dont j'ai besoin (ID et Nom) dans un tableau
         $tabLieux = array();
         $compteur=0;
         foreach ($lieux as $l){
@@ -268,6 +270,7 @@ class SortieController extends AbstractController
             $compteur++;
         }
 
+        // Je retourne mon tableau
         return $this->json($tabLieux);
     }
 

@@ -86,22 +86,28 @@
         function populateSelect(id) {
             //vider le select des lieux
             document.getElementById('lieu-select').innerHTML = "";
-            // THE JSON ARRAY.
+
+            // Récupération de l'URL
             let test1 = "{{ path('api_ville', {id: "2"}) }}";
             let url = test1.replace('/2','');
             let url2 = url + '/' + id;
-            console.log(url2);
+
+
             var ele = document.getElementById('lieu-select');
-            console.log(url2);
+
+            // Récupération des données
             let tableau = [];
             axios.get(url2).then(response => {
                 tableau = response.data;
-                console.log(response.data);
+
+                // Création de l'option "TOUS"
                 var opt = document.createElement('option');
                 opt.value = 0;
                 opt.innerHTML = "Tous";
                 opt.selected = true;
                 ele.appendChild(opt);
+
+                // Ajout des lieux
                 for (var i = 0; i < tableau.length; i++) {
                     ele.innerHTML = ele.innerHTML +
                         '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + '</option>';
