@@ -64,7 +64,7 @@ class RegistrationController extends AbstractController
             if ($request->request->get('registration_form_site') != null){
                 $user->setSite($site) ;
             }
-            $user->setRoles(["ROLE_ADMIN"]);
+            $user->setRoles(["ROLE_USER"]);
             $user->setActif(true);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
