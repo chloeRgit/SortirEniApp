@@ -594,6 +594,25 @@ table p.inscrit{
     margin: 0!important;
 }
 
+.registration .button-container{
+    display: block!important;
+    text-align: center;
+}
+
+.registration .button-container button,
+.registration .button-container div{
+    margin: 1em 0!important;
+}
+
+.registration .button-container div{
+    display: flex!important;
+    justify-content: center!important;
+}
+
+.registration .button-container div .form-check-input{
+    margin-right: 1em;
+}
+
 @media only screen and (max-width: 992px) {
     .create_lieu .col-lg-6 div {
         margin: 0.5em 0 !important;
