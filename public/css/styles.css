@@ -535,6 +535,15 @@ table p.inscrit{
 .sortie_info{
     margin: 2em 0!important;
 }
+.login .row{
+    display: flex!important;
+    flex-direction: column!important;
+}
+
+.login .row .col-lg-6{
+    display: block!important;
+    margin: auto !important;
+}
 
 @media only screen and (max-width: 992px) {
     main .row{

@@ -113,23 +113,25 @@
             document.getElementById('cp-lieu-sortie').value = "";
             document.getElementById('lat-lieu-sortie').value = "";
             document.getElementById('long-lieu-sortie').value = "";
-            // THE JSON ARRAY.
+
+            // Récupération de l'URL
             let test1 = "{{ path('api_lieux', {id: "2"}) }}";
             let url = test1.replace('/2','');
             let url2 = url + '/' + id;
+
+            // Récupération des données envoyé par le controller
             let tableau = [];
             axios.get(url2).then(response => {
-                console.log(url2);
                 tableau = response.data;
-                console.log(response.data);
+
+                // Affichage des données
                 document.getElementById('rue-lieu-sortie').value = tableau[0];
                 document.getElementById('cp-lieu-sortie').value = tableau[1];
                 document.getElementById('lat-lieu-sortie').value = tableau[2];
                 document.getElementById('long-lieu-sortie').value = tableau[3];
-                console.log(tableau['rue']);
-                var cpSortie = document.getElementById('cp-lieu-sortie');
             })
         }
+        
         function dateFinMini(value) {
             //alert(value);
             document.getElementById("date-l-sortie").setAttribute("max",value);

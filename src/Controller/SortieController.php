@@ -276,18 +276,22 @@ class SortieController extends AbstractController
      */
     public function infoLieu(LieuRepository $lieuRepo, VilleRepository $repo, $id): Response
     {
+        // Recherche du lieu en fonction de l'ID
         $lieu = $lieuRepo->findOneBy(
             [
                 "id" => $id
             ]
         );
 
+        // Je contourne le circular référence
+        // en créant un tableau avec uniquement les informations dont j'ai besoin
         $tabLieu = array();
         $tabLieu[0] = $lieu->getRue();
         $tabLieu[1] = $lieu->getVille()->getCodePostal();
         $tabLieu[2] = $lieu->getLatitude();
         $tabLieu[3] = $lieu->getLongitude();
 
+        // Je retourne le tableau
         return $this->json($tabLieu);
     }
     /**
