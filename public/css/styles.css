@@ -545,7 +545,62 @@ table p.inscrit{
     margin: auto !important;
 }
 
+.create_ville .row,
+.create_lieu .row{
+    display: flex!important;
+    flex-direction: column!important;
+    margin: 2em 0!important;
+}
+
+.create_ville .row .col-lg-6,
+.create_lieu .row .col-lg-6{
+    display: block!important;
+    margin: auto !important;
+}
+
+.create_ville .col-lg-6 div,
+.create_lieu .col-lg-6 div{
+    margin: 0.5em 0 !important;
+    display: grid;
+    grid-template-columns: 20% 80%;
+    grid-gap: 1em;
+}
+
+.button-container{
+    display: flex!important;
+    justify-content: center!important;
+}
+
+.create_lieu .ville{
+    grid-template-columns: 20% 52.5% 25%!important;
+}
+
+.create_lieu .ville div{
+    grid-template-columns: 100%!important;
+}
+
 @media only screen and (max-width: 992px) {
+    .create_lieu .col-lg-6 div {
+        margin: 0.5em 0 !important;
+        display: grid;
+        grid-template-columns: 30% 75%;
+        grid-gap: 1em;
+    }
+
+    .create_lieu .ville{
+        grid-template-columns: 30% 46% 25%!important;
+    }
+
+    .create_lieu .ville div{
+        grid-template-columns: 100%!important;
+    }
+
+    .create_ville .col-lg-6 div{
+        margin: 0.5em 0 !important;
+        display: grid;
+        grid-template-columns: 25% 75%;
+        grid-gap: 1em;
+    }
     main .row{
         flex-direction: column;
     }
@@ -628,6 +683,10 @@ table p.inscrit{
         max-width: 75%;!important;
     }
 
+    .create_lieu .ville{
+        grid-template-columns: 30% 44% 35%!important;
+    }
+
     .col-lg-3.photo{
         text-align: center;
     }
@@ -657,6 +716,17 @@ table p.inscrit{
 }
 
 @media only screen and (max-width: 600px){
+    .create_lieu .col-lg-6 div {
+        grid-template-columns: 25% 71%;
+    }
+
+    .create_lieu .ville{
+        grid-template-columns: 25% 42% 25%!important;
+    }
+
+    .create_lieu .ville div{
+        grid-template-columns: 100%!important;
+    }
     .table-wrapper-scroll-y table tr th:not(.table-wrapper-scroll-y table tr th:first-child,
 .table-wrapper-scroll-y table tr th:last-child),
     .table-wrapper-scroll-y table tr td:not(.table-wrapper-scroll-y table tr td:first-child,
