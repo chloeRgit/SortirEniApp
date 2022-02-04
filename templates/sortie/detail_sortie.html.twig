@@ -1,0 +1,130 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie : détails{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Afficher une sortie</h1>
+
+        <div class="row align-items-start mt-3">
+
+            {# affichage des champs de la colonne de gauche #}
+            <div class="col pt-4">
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        <p>Nom de la sortie :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.nom | upper }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        <p>Date et heure de la sortie :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.dateHeureDebut |date("d/m/Y H:i:s")}}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        <p>Date limite d'inscription :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.dateLimiteInscription |date("d/m/Y")}}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        <p> Nombre de places : </p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.nbInscriptionsMax}}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        <p>Durée :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.duree }}  minutes
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                    </div>
+                    <div class="col col-lg-4">
+                        Descriptions et infos :
+                    </div>
+                    <div class="col col-lg-4">
+                        <textarea class="description_sortie"disabled name="desc-sortie">{{ s.infosSortie }} </textarea>
+                    </div>
+                </div>
+            </div>
+
+            {# affichage des champs de la colonne de droite #}
+            <div class="col pt-4">
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <p> Campus organisateur :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.site.nom | upper }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <p>Lieu :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.lieu.nom }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <p>Rue :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{ s.lieu.rue }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <p>Code postal :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{  s.lieu.ville.codePostal }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <p>Ville :</p>
+                    </div>
+                    <div class="col col-lg-4">
+                        {{  s.lieu.ville.nom | upper}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# affichage du bouton de retour à la page d'accueil #}
+        <div class="btn-container">
+            <a class="btn btn-outline-danger m-5" href=" {{ path('main') }}">Retour</a>
+        </div>
+
+    </div>
+
+
+{% endblock %}

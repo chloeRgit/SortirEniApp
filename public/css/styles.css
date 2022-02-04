@@ -19,9 +19,11 @@ footer {
     margin-bottom: 0;
 }
 
-h1 {
+h1, .h1 {
     font-family: 'Dancing Script', cursive;
     text-align: center;
+    color: #042444 !important;
+    text-decoration: none;
 }
 
 
@@ -56,10 +58,8 @@ h1 {
 
 .btn-container a, btn-action{
     padding: 0.5em 1em;
-    background-color: wheat;
+    background-color: white;
     text-decoration: none;
-    color: black;
-    text-transform: uppercase;
 }
 .btn-action{
     padding: 0.5em 1em!important;

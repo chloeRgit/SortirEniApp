@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -17,25 +20,13 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo')
-            ->add('email')
-            ->add('nom')
-            ->add('prenom')
-            ->add('site',null,['choice_label'=>'nom'])
-            ->add('telephone')
-            //->add('actif')
-            //->add('photo')
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ])
+            ->add('pseudo',     TextType::class,    ['label' => 'Pseudo :'])
+            ->add('prenom',     TextType::class,    ['label' => 'Prénom :'])
+            ->add('nom',        TextType::class,    ['label' => 'Nom :'])
+            ->add('telephone',  TextType::class,    ['label' => 'Téléphone :'])
+            ->add('email',      EmailType::class,   ['label' => 'Adresse mail :'])
             ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+                'label' => 'Mot de passe :',
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
@@ -50,6 +41,20 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+            ->add('site',null, [
+                'label' => 'Ville de rattachement :',
+                'choice_label'=>'nom'])
+//            ->add('photo')
+//            ->add('actif')
+//            ->add('agreeTerms', CheckboxType::class, [
+//                'mapped' => false,
+//                'constraints' => [
+//                    new IsTrue([
+//                        'message' => 'You should agree to our terms.',
+//                    ]),
+//                ],
+//            ])
+
         ;
     }
 

@@ -21,14 +21,14 @@
     #}
     {% block stylesheets %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
-
-        <link href="{{ asset('CSS/styles.css') }}" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
               integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
               crossorigin="anonymous">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+{#        <link href="{{ asset('/bundles/uamdatatables/css/jquery.dataTables.css') }}" rel="stylesheet"/>#}
+        <link href="{{ asset('CSS/styles.css') }}" rel="stylesheet">
     {% endblock %}
 
     {#
@@ -41,17 +41,17 @@
     recuperation des icons font-awesome
     #}
 
-
 </head>
 
 <body>
 
 <header>
-    <nav class="navbar navbar-light" style="background-color: #d1ecf1;">
+    <nav class="navbar navbar-light justify-content-center" style="background-color: #d1ecf1;">
         <div class="container">
-            <img class="logo" src="{{ asset('images/logo.png') }}">
+            <a href="{{ path('main') }}"><img class="logo" src="{{ asset('images/logo.png') }}" alt="Logo de l'application"></a>
 
-            <h1 style="font-family: 'Dancing Script', cursive; color: #042444; " {{ path('main') }}">Sortir.com</h1>
+            <a class="h1" href="{{ path('main') }}">Sortir.com</a>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,20 +59,34 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
-                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ path('main') }}">Sorties</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="{{ path('main') }}">Contact</a></li>
+
+                    {% if app.user == null %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}">Se connecter</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a></li>
+{#                        <li class="nav-item"><a class="nav-link" href="{{ path('profil', {id: user.id}) }}">Mon profil</a></li>#}
+                    {% endif %}
+                    {% if app.user != null %}
+                        {% if user.roles[0]  == "ROLE_ADMIN" %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}">Créer un nouveau participant</a></li>
+                        {% endif %}
+                    {% endif %}
+                    {% if app.user != null %}
+                        <li class="nav-item"><a class="nav-link " href="{{ path('main') }}">Afficher les sorties</a>
+                        <li class="nav-item"><a class="nav-link " href="{{ path('create_sortie') }}">Créer une sortie</a>
+                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+
 <main>
     <div class="container mt-5 mb-5">
         {% block body %}{% endblock %}
     </div>
 </main>
+
 <footer class="py-3 fixed-bottom" style="background-color: #d1ecf1;">
     <div class="container">
         <p class="text-center">
@@ -81,5 +95,13 @@
         </p>
     </div>
 </footer>
+
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+            crossorigin="anonymous"></script>
+{% endblock %}
+
 </body>
+
 </html>

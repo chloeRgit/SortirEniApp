@@ -1,0 +1,219 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sortie{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Créer une sortie</h1>
+
+        {{ form_start(creationSortieForm) }}
+
+        <div class="row align-items-start">
+
+            {# affichage des champs de la colonne de gauche #}
+            <div class="col pt-4">
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.nom) }}
+                    </div>
+                    <div class="col col-lg-8" name="titre-sortie">
+                        {{ form_widget(creationSortieForm.nom) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.dateHeureDebut) }}
+                    </div>
+                    <div class="col col-lg-8" name="date-h-sortie">
+                        {{ form_widget(creationSortieForm.dateHeureDebut) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.dateLimiteInscription) }}
+                    </div>
+                    <div class="col col-lg-8" name="date-l-sortie">
+                        {{ form_widget(creationSortieForm.dateLimiteInscription) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.nbInscriptionsMax) }}
+                    </div>
+                    <div class="col col-lg-3" name="nbParticipant-sortie">
+                        {{ form_widget(creationSortieForm.nbInscriptionsMax) }}
+                    </div>
+                    <div class="col col-lg-5">
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.duree) }}
+                    </div>
+                    <div class="col col-lg-3" name="duree-sortie">
+                        {{ form_widget(creationSortieForm.duree) }}
+                    </div>
+                    <div class="col col-lg-5">
+                        minutes
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(creationSortieForm.infosSortie) }}
+                    </div>
+                    <div class="col col-lg-8" name="desc-sortie">
+                        {{ form_widget(creationSortieForm.infosSortie) }}
+                    </div>
+                </div>
+            </div>
+
+            {# affichage des champs de la colonne de droite #}
+            <div class="col pt-4">
+                <div class="row m-2">
+                    <div class="col col-lg-4" name="ville-org-sortie">
+                        <p>Campus organisateur :</p>
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ user.site.nom | upper }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <label for="ville-select">Ville :</label>
+                    </div>
+                    <div class="col col-lg-8">
+                        <select id="ville-select" onchange=populateSelect(this.value)
+                                class="form-control" name="ville-select">
+                            <option selected>Toutes les villes</option>
+                            {% for vv in ville %}
+                                <option value="{{ vv.id }}"> {{ vv.nom }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+{#                <div class="row m-2">#}
+{#                    <div class="col col-lg-4">#}
+{#                        {{ form_label(creationSortieForm.ville) }}#}
+{#                    </div>#}
+{#                    <div class="col col-lg-8">#}
+{#                        {{ form_widget(creationSortieForm.ville) }}#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <label for="lieu-select">Lieu :</label>
+                    </div>
+                    <div class="col col-lg-8">
+                        <select id="lieu-select" onchange=showInfo(this.value) class="form-control" name="lieu-select"> </select>
+                    </div>
+                </div>
+{#                <div class="row m-2">#}
+{#                    <div class="col col-lg-4">#}
+{#                        {{ form_label(creationSortieForm.lieu) }}#}
+{#                    </div>#}
+{#                    <div class="col col-lg-8">#}
+{#                        {{ form_widget(creationSortieForm.lieu) }}#}
+{#                    </div>#}
+{#                </div>#}
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <label for="rue-lieu-sortie">Rue :</label>
+                    </div>
+                    <div class="col col-lg-8">
+                        <input type="text" name="rue-lieu-sortie" id="rue-lieu-sortie" disabled value="">
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        <label for="cp-lieu-sortie">Code postal :</label>
+                    </div>
+                    <div class="col col-lg-8">
+                        <input type="text" name="cp-lieu-sortie" id="cp-lieu-sortie" disabled value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {# affichage des boutons #}
+        <div class="btn-container">
+            <button type="submit" class="btn btn-outline-secondary m-5" name="action" value="1">Enregistrer</button>
+            <button type="submit" class="btn btn-outline-success m-5" id="publish" name="action"value="2">Publier la sortie</button>
+            <a class="btn btn-outline-danger m-5" href=" {{ path('main') }}">Annuler</a>
+        </div>
+
+        {{ form_end(creationSortieForm, {render_rest: false}) }}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+
+        // pour alimenter la liste des lieux en fonction de la ville choisie
+        function populateSelect(id) {
+
+            // on réinitialise les lieux
+            document.getElementById('lieu-select').innerHTML = "";
+
+            // on récupére l'URL
+            let test1 = "{{ path('api_ville', {id: "2"}) }}";
+            let url = test1.replace('/2', '');
+            let url2 = url + '/' + id;
+            var ele = document.getElementById('lieu-select');
+
+            // on récupére les données
+            let tableau = [];
+            axios.get(url2).then(response => {
+                tableau = response.data;
+
+                // création de l'option "TOUS"
+                var opt = document.createElement('option');
+                opt.value = 0;
+                opt.innerHTML = "Tous les lieux";
+                opt.selected = true;
+                ele.appendChild(opt);
+
+                // ajout des lieux
+                for (var i = 0; i < tableau.length; i++) {
+                    ele.innerHTML = ele.innerHTML +
+                        '<option value="' + tableau[i]["id"] + '">' + tableau[i]["nom"] + '</option>';
+                }
+            })
+        }
+
+        // pour récuppérer les données en fonction du lieu choisi
+        function showInfo(id) {
+
+            // on vide les inputs des lieux
+            document.getElementById('rue-lieu-sortie').value = "";
+            document.getElementById('cp-lieu-sortie').value = "";
+            // document.getElementById('lat-lieu-sortie').value = "";
+            // document.getElementById('long-lieu-sortie').value = "";
+
+            // on récupère l'URL
+            let test1 = "{{ path('api_lieux', {id: "2"}) }}";
+            let url = test1.replace('/2', '');
+            let url2 = url + '/' + id;
+
+            // on récupére des données envoyées par le controller
+            let tableau = [];
+            axios.get(url2).then(response => {
+                tableau = response.data;
+
+                // affichage des données
+                document.getElementById('rue-lieu-sortie').value = tableau[0];
+                document.getElementById('cp-lieu-sortie').value = tableau[1];
+                // document.getElementById('lat-lieu-sortie').value = tableau[2];
+                // document.getElementById('long-lieu-sortie').value = tableau[3];
+            })
+        }
+
+        function dateFinMini(value) {
+            //alert(value);
+            document.getElementById("date-l-sortie").setAttribute("max",value);
+        }
+    </script>
+
+{% endblock %}

@@ -19,32 +19,22 @@ class LieuRepository extends ServiceEntityRepository
         parent::__construct($registry, Lieu::class);
     }
 
-    // /**
-    //  * @return Lieu[] Returns an array of Lieu objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    // permet de récupérer les lieux d'une ville donnée
+    public function LieuFiltre($ville = null)
     {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $entityManager = $this->getEntityManager();
+        $dql = "SELECT l FROM App\Entity\Lieu l";
+        if ($ville) {
+            $dql .= " WHERE l.ville=:ville";
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Lieu
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+
+        $query = $entityManager->createQuery($dql);
+        if ($ville) {
+            $query->setParameter("ville", $ville);
+        }
+
+        return $query->getResult();
     }
-    */
+
 }

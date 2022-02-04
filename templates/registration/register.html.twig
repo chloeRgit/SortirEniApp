@@ -3,15 +3,92 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+    <div class="container">
+        <div class="row justify-content-md-center">
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <h1>Mon profil</h1>
+
+            <div class="col col-lg-6 pt-4 mt-1">
+                {{ form_start(registrationForm) }}
+
+                {# affichage des champs #}
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.pseudo) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.pseudo) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.prenom) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.prenom) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.nom) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.nom) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.telephone) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.telephone) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.email) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.email) }}
+                    </div>
+                </div>
+                <div class="row m-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.plainPassword) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.plainPassword) }}
+                    </div>
+                </div>
+                <div class="row mx-2 mt-2">
+                    <div class="col col-lg-4">
+                        {{ form_label(registrationForm.site) }}
+                    </div>
+                    <div class="col col-lg-8">
+                        {{ form_widget(registrationForm.site) }}
+                    </div>
+                </div>
+            </div>
+
+            {# affichage de la photo #}
+            {# <div> #}
+            {# <div class="mt-3"> #}
+            {# {{ form_label(registrationForm.photo, null, {'attr': {'class': 'has-text-link'} }) }} #}
+            {# </div> #}
+            {# <div> #}
+            {# {{ form_widget(registrationForm.photo, {'attr': {'class': 'input is-primary'}}) }} #}
+            {# </div> #}
+            {# </div> #}
+
+            {# affichage des boutons #}
+            <div class="btn-container">
+                <a type="submit" class="btn btn-outline-success m-5">Enregistrer</a>
+                <a class="btn btn-outline-danger m-5" href=" {{ path('main') }}">Annuler</a>
+            </div>
+
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+
 {% endblock %}
